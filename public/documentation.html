@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Movies for You</title>
+  </head>
+  <body>
+    <h1>Documentation</h1>
+    <p>
+      This application will allow users to create accounts and add movies to their favorites list. Below are a list of actions any user can make.
+    </p>
+    <table class="main">
+      <tr>
+        <th>Request</th>
+        <th>URL</th>
+        <th>URL Parameters</th>
+        <th>HTTP method</th>
+        <th>Example body input</th>
+        <th>Example Response (current response)</th>
+      </tr>
+      <tr>
+        <td>none</td>
+        <td>/</td>
+        <td>n/a</td>
+        <td>GET</td>
+        <td>n/a</td>
+        <td>'Welcome to my page!'</td>
+      </tr>
+      <tr>
+        <td>Get a list of all movies in the system</td>
+        <td>/movies</td>
+        <td>n/a</td>
+        <td>GET</td>
+        <td>n/a</td>
+        <td>...{title:'Schindler's List',genre:'Drama',year:'1993',director:'Steven Spielberg'},{title:'The Shining',genre:'Horror',year:'1980',director:'Stanley Kubrick'},</td>
+      </tr>
+      <tr>
+        <td>Gets information on a singular movie</td>
+        <td>/movies/:title</td>
+        <td>:title - movie title you want to get information about</td>
+        <td>GET</td>
+        <td>n/a</td>
+        <td>{title:'Schindler's List',genre:'Drama',year:'1993',director:'Steven Spielberg'}</td>
+      </tr>
+      <tr>
+        <td>Pulls information about genres</td>
+        <td>/genres</td>
+        <td>n/a</td>
+        <td>GET</td>
+        <td>n/a</td>
+        <td>'Details about each genre here'</td>
+      </tr>
+      <tr>
+        <td>Pull information about a specific director, currently pulls 1st movie in list with that director</td>
+        <td>/directors/:director</td>
+        <td>:director - director you want to get information about</td>
+        <td>GET</td>
+        <td>n/a</td>
+        <td>{title:'Schindler's List',genre:'Drama',year:'1993',director:'Steven Spielberg'}</td>
+      </tr>
+      <tr>
+        <td>Registers account for new user</td>
+        <td>/accounts/register</td>
+        <td>n/a</td>
+        <td>POST</td>
+        <td>account name, favorites list</td>
+        <td>'Use this URL to create an account'</td>
+      </tr>
+      <tr>
+        <td>Updates the specified account as needed</td>
+        <td>/accounts/:id/update</td>
+        <td>:id - account id</td>
+        <td>PUT</td>
+        <td>account name, favorites list</td>
+        <td>'Use this URL to update your account with id: 425'</td>
+      </tr>
+      <tr>
+        <td>Deletes the specified account</td>
+        <td>/users/:id</td>
+        <td>:id - account id</td>
+        <td>DELETE</td>
+        <td>n/a</td>
+        <td>'Account will be deleted as soon as I write the code for it'</td>
+      </tr>
+      <tr>
+        <td>Adds a movie to the users favorites list</td>
+        <td>/users/:id/:movie</td>
+        <td>:id - account id<br>
+            :movie - movie the user wants to add to the list</td>
+        <td>ADD</td>
+        <td>Inception (movie title)</td>
+        <td>Adds 'Inception' to account with ID: 425</td>
+      </tr>
+      <tr>
+        <td>Removes a movie to the users favorites list</td>
+        <td>/users/:id/:movie</td>
+        <td>:id - account id<br>
+            :movie - movie the user wants to remove from the list</td>
+        <td>DELETE</td>
+        <td>Inception (movie title)</td>
+        <td>'Inception' will be deleted from list of user with id of 425</td>
+      </tr>
+      <tr>
+        <td>Allows the user to read about how to use the API</td>
+        <td>/documentation.html</td>
+        <td>n/a</td>
+        <td>GET</td>
+        <td>n/a</td>
+        <td>Loads this exact page</td>
+      </tr>
+    </table>
+  </body>
+</html>
