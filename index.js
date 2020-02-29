@@ -74,7 +74,7 @@ app.get('/users', (req, res) => {
 });
 
 //Get account by username
-app.get('/users/:username', (res, req) {
+app.get('/users/:username', (res, req) => {
     //Look through database for username input by user
     Users.findOne({Username: req.params.Username})
     //Returns user with requested username
@@ -99,7 +99,7 @@ app.put('/users/:Username', function(req, res) {
             Email : req.body.Email,
             Birthday : req.body.Birthday
         }},
-        //Ensures document is returned
+        //States you want the document to be returned
         {new: true},
         function(error, updatedUser) {
             //Catch for errors
