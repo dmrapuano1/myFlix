@@ -175,6 +175,43 @@ let topMovies = [
 ];
 
 //Creates list of users
+let users = [
+    {
+        username: 'janedoe',
+        password: 'passw0rd',
+        email: 'janedoe@yahoo.com',
+        dob: new Date("1985-12-15"),
+        favoriteMovies: [],
+    },
+    {
+        username: 'johndoe',
+        password: '1pass1word1',
+        email: 'notarealboy@gmail.com',
+        dob: new Date("1986-01-18"),
+        favoriteMovies: [],
+    },
+    {
+        username: 'user1234',
+        password: 'password1234',
+        email: 'myemail@none.com',
+        dob: new Date("2001-11-18"),
+        favoriteMovies: [],
+    },
+    {
+        username: 'someRandomdude',
+        password: 'randomlyGeneratedPassword',
+        email: 'randomemail@aol.com',
+        dob: new Date("1995-08-27"),
+        favoriteMovies: [],
+    },
+    {
+        username: 'dmrapuano',
+        password: 'fakePassw0Rd',
+        email: 'dmrapuano@notanemail.com',
+        dob: new Date("1992-11-04"),
+        favoriteMovies: [],
+    },
+];
 
 // Middleware that logs all navigation to webpage
 app.use(morgan('common'));
@@ -213,6 +250,11 @@ app.get('/directors/:director', (req, res) => {
     res.json(topMovies.find((movie) => {
         return movie.director === req.params.director;
     }));
+});
+
+//Shows all registered users
+app.get('/accounts/users', (req, res) => {
+    res.json(users);
 });
 
 //Create an account
