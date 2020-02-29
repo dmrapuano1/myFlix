@@ -153,14 +153,50 @@ app.post('/accounts', (req, res) => {
     });
 });
 
-//Update account info
-app.put('/accounts/:id/update', (req, res) => {
-    res.send('Use this URL to update your account with id: ' + req.params.id);
+//Pulls a user's favorite list
+app.get('/users/:Username/movies', (res, req) => {
+    //Look through database for username input by user
+    Users.findOne({Username: req.params.Username})
+    //Returns user's movie list
+    .then(function(user) {
+        res.json(user.FavoriteMovies)
+    })
+    //Catch for all errors
+    .catch(function(error) {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
+});
+
+//Adds movie to user's favorite list
+app.post('/users.:Username/movies/:MovieID', function(req, res) {
+    Users.findOneAndUpdate({Username: req.params.Username},
+        {$push: {FavoriteMovies: req.params.MovieID}},
+        {new: true},
+        function(error, updatedUser) {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error ' + error)
+            } else {
+                res.json(updatedUser);
+            };
+        })
 });
 
 //Delete an account (unregister) by account ID
-app.delete('/users/:id', (req, res) => {
-    res.send('Account will be deleted as soon as I write the code for it');
+app.delete('/users/:Username', (req, res) => {
+    Users.findByIdAndRemove({Username: req.params.Username})
+    .then(function(user) {
+        if (!user) {
+            res.status(400).send('Username ' + req.params.Username + ' was not found.');
+        } else {
+            res.status(200).send(req.params.Username + ' was deleted.');
+        }
+    })
+    .catch(function (error) {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
 });
 
 //Add movies to account
