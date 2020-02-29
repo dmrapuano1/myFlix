@@ -4,7 +4,7 @@ morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid'),
 mongoose = require('mongoose'),
-Models = require('./modules.js')
+Models = require('./models.js/index.js')
 
 // Sets app to use express framework from above
 const app = express();
@@ -12,7 +12,7 @@ const app = express();
 //Allows express to use bodyParser
 app.use(bodyParser.json());
 
-//Pulls movies and users from modules.js
+//Pulls movies and users from models.js
 const Movies = Models.Movie;
 const Users = Models.User
 
