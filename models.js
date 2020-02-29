@@ -1,4 +1,4 @@
-//Requires module for file
+//Obtains mongoose module
 const mongoose = require('mongoose');
 
 //Creates movie Schema for mongoose to read
