@@ -58,9 +58,59 @@ app.get('/directors/:director', (req, res) => {
     }));
 });
 
-//Shows all registered users
-app.get('/accounts/users', (req, res) => {
-    res.json(users);
+//Get all registered users
+app.get('/users', (req, res) => {
+    //Finds all users in database
+    Users.find()
+    //Returns all users found
+    .then(function(users){
+        res.status(201).json(users)
+    })
+    //Catch for all errors
+    .catch(function(error){
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
+});
+
+//Get account by username
+app.get('/users/:username', (res, req) {
+    //Look through database for username input by user
+    Users.findOne({Username: req.params.Username})
+    //Returns user with requested username
+    .then(function(user) {
+        res.json(user)
+    })
+    //Catch for all errors
+    .catch(function(error) {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
+});
+
+//Update user's info by username
+app.put('/users/:Username', function(req, res) {
+    //Pulls all users with :username
+    Users.findOneAndUpdate({Username: req.params.Username}, 
+        //Sets user's info to body of request
+        {$set: {
+            Username : req.body.Username,
+            Password : req.body.Password,
+            Email : req.body.Email,
+            Birthday : req.body.Birthday
+        }},
+        //Ensures document is returned
+        {new: true},
+        function(error, updatedUser) {
+            //Catch for errors
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error ' + error);
+            } else {
+                //Returns user with updated information
+                res.json(updatedUser)
+            };
+        })
 });
 
 //Creates an account
