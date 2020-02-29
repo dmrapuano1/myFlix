@@ -63,9 +63,44 @@ app.get('/accounts/users', (req, res) => {
     res.json(users);
 });
 
-//Create an account
-app.post('/accounts/register', (req, res) => {
-    res.send('Use this URL to create an account');
+//Creates an account
+/*  
+    Expected JSON format:
+    {
+    ID : Integer, (to be created by database)
+    Username : String,
+    Password : String,
+    Email : String,
+    Birthday : Date
+    }
+*/
+app.post('/accounts', (req, res) => {
+    //Runs findOne on database to determine if username is already in database
+    Users.findOne({Username: req.body.Username}).then(function(user){
+        if (user){
+            //Returns error if selected username already exists in database
+            return res.status(400).send(req.body.User + ' already exists. Try another username.');
+        } else {
+            //Creates user if new username using same setup from models.js (note ID is missing on purpose)
+            Users.create({
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            })
+            //Displays to user that the user has been created
+            .then(function(user) {res.status(201).json(user)})
+            //Catch for errors on creation of user
+            .catch(function(error) {
+                console.error(error);
+                res.status(500).send('Error ' + error);
+            })
+        };
+    //Catch for all errors outside creation of user
+    }).catch(function(error){
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
 });
 
 //Update account info
