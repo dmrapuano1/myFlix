@@ -2,13 +2,22 @@
 const express = require('express'),
 morgan = require('morgan'),
 bodyParser = require('body-parser'),
-uuid = require('uuid');
+uuid = require('uuid'),
+mongoose = require('mongoose'),
+Models = require('./modules.js')
 
 // Sets app to use express framework from above
 const app = express();
 
 //Allows express to use bodyParser
 app.use(bodyParser.json());
+
+//Pulls movies and users from modules.js
+const Movies = Models.Movie;
+const Users = Models.User
+
+//Connects mongoose to the MongoDB needed (myFlixDB)
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 
 // Creates file of Top 10 Movies
 let topMovies = [
