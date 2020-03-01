@@ -188,13 +188,13 @@ app.post('/accounts', (req, res) => {
             //Creates user if new username using same setup from models.js (note ID is missing on purpose)
             Users
             .create({
-                username: req.body.Username,
-                password: req.body.Password,
-                email: req.body.Email,
-                birthday: req.body.Birthday
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
             })
             //Displays to user that the user has been created
-            .then(function(user) {res.status(201).json(user)})
+            .then(function(user) {res.status(201).json({user})})
             //Catch for errors on creation of user
             .catch(function(error) {
                 console.error(error);
@@ -210,8 +210,9 @@ app.post('/accounts', (req, res) => {
 
 //Delete an account (unregister) by account ID
 app.delete('/users/:Username', (req, res) => {
-    Users.findByIdAndRemove({username: req.params.Username})
+    Users.findOneAndRemove({username: req.params.Username})
     .then(function(user) {
+        console.log(user);
         if (!user) {
             res.status(400).send('Username ' + req.params.Username + ' was not found.');
         } else {
