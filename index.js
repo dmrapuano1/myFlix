@@ -30,9 +30,7 @@ app.use(function (err, req, res, next) {
 });
 
 // 'webpage'/ functionality
-app.get('/', function(req, res){
-    res.send('Welcome to my app!');
-});
+app.use(express.static('welcome'));
 
 //Returns a list of all movies to the user
 app.get('/movies', (req, res) => {
@@ -207,6 +205,22 @@ app.post('/accounts', (req, res) => {
     });
 });
 
+//Delete an account (unregister) by account ID
+app.delete('/users/:Username', (req, res) => {
+    Users.findByIdAndRemove({Username: req.params.Username})
+    .then(function(user) {
+        if (!user) {
+            res.status(400).send('Username ' + req.params.Username + ' was not found.');
+        } else {
+            res.status(200).send(req.params.Username + ' was deleted.');
+        }
+    })
+    .catch(function (error) {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
+});
+
 //Pulls a user's favorite list
 app.get('/users/:Username/movies', (res, req) => {
     //Look through database for username input by user
@@ -235,22 +249,6 @@ app.post('/users/:Username/movies/:MovieID', function(req, res) {
                 res.status(201).json(updatedUser);
             };
         })
-});
-
-//Delete an account (unregister) by account ID
-app.delete('/users/:Username', (req, res) => {
-    Users.findByIdAndRemove({Username: req.params.Username})
-    .then(function(user) {
-        if (!user) {
-            res.status(400).send('Username ' + req.params.Username + ' was not found.');
-        } else {
-            res.status(200).send(req.params.Username + ' was deleted.');
-        }
-    })
-    .catch(function (error) {
-        console.error(error);
-        res.status(500).send('Error ' + error);
-    });
 });
 
 //'webpage'/documentation (or any file in public folder) functionality
