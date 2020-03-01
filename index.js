@@ -241,9 +241,10 @@ app.get('/users/:Username/movies', (req, res) => {
 });
 
 //Adds movie to user's favorite list
+//Still broken
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({username: req.params.Username},
-        {$push: {favoriteMovies: req.params.MovieID}},
+        {$push: {FavoriteMovies: req.params.MovieID}},
         {new: true})
         .then(function(updatedUser) {
             res.status(201).json(updatedUser);
@@ -255,6 +256,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 //Deletes movie from user's favorite list
+//Untested
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndDelete({username: req.params.Username},
         {$pull: {favoriteMovies: req.params.MovieID}},
