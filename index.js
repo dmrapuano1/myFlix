@@ -243,15 +243,14 @@ app.get('/users/:Username/movies', (req, res) => {
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({username: req.params.Username},
         {$push: {favoriteMovies: req.params.MovieID}},
-        {new: true},
-        function(error, updatedUser) {
-            if (error) {
-                console.error(error);
-                res.status(500).send('Error ' + error)
-            } else {
-                res.status(201).json(updatedUser);
-            };
+        {new: true})
+        .then(function(updatedUser) {
+            res.status(201).json(updatedUser);
         })
+        .catch(function(error) {
+            console.log(error);
+            res.status(500).send('Error ' + error);
+        });
 });
 
 //Deletes movie from user's favorite list
