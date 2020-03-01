@@ -28,28 +28,52 @@ app.use(function (err, req, res, next) {
     res.status(500);
     res.render('error', { error: err });
 });
+
 // 'webpage'/ functionality
 app.get('/', function(req, res){
     res.send('Welcome to my app!');
 });
 
-//'webpage'/movies functionality
+//Returns a list of all movies to the user
 app.get('/movies', function(req, res){
-    // Returns a JSON file of the topMovies variable
-    res.json(topMovies);
+    //Find all movies in database
+    Movies.find()
+    .then(function(movies){
+        //Returns movies to user
+        res.status(201).json(movies)
+    })
+    //Catch for all errors
+    .catch(function(error){
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
 });
 
 // Returns individual title
-app.get('/movies/:title', (req, res) => {
-    res.json(topMovies.find((movie) => { 
-        return movie.title === req.params.title;
-    }));
+app.get('/movies/:Title', (req, res) => {
+    //Returns target movie from database
+    Movies.findOne({Title: req.params.Title})
+    .then(function(movie) {
+        res.json(movie);
+    })
+    //Catch for all errors
+    .catch(function(error) {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
 });
 
-//Returns details about a genre
-app.get('/genres', (req, res) => {
-    res.send('Details about each genre here');
-});
+//Returns details about all genres (NEEDS FIX)
+// app.get('/genres', (req, res) => {
+//     Movies.genre.find()
+//     .then(function(genres) {
+//         res.status(201).json(genres)
+//     })
+//     .catch(function(error){
+//         console.error(error);
+//         res.status(500).send('Error ' + error);
+//     });
+// });
 
 //Returns bio about director
 app.get('/directors/:director', (req, res) => {
@@ -74,7 +98,7 @@ app.get('/users', (req, res) => {
 });
 
 //Get account by username
-app.get('/users/:username', (res, req) => {
+app.get('/users/:Username', (res, req) => {
     //Look through database for username input by user
     Users.findOne({Username: req.params.Username})
     //Returns user with requested username
@@ -169,7 +193,7 @@ app.get('/users/:Username/movies', (res, req) => {
 });
 
 //Adds movie to user's favorite list
-app.post('/users.:Username/movies/:MovieID', function(req, res) {
+app.post('/users/:Username/movies/:MovieID', function(req, res) {
     Users.findOneAndUpdate({Username: req.params.Username},
         {$push: {FavoriteMovies: req.params.MovieID}},
         {new: true},
@@ -197,15 +221,6 @@ app.delete('/users/:Username', (req, res) => {
         console.error(error);
         res.status(500).send('Error ' + error);
     });
-});
-
-//Add movies to account
-app.put('/users/:id/:movie', (req, res) => {
-    res.send('Adds ' + req.params.movie + ' to account with ID: ' + req.params.id);
-});
-
-app.delete('/users/:id/:movie', (req, res) => {
-    res.send(req.params.movie + ' will be deleted from list of user with id of ' + req.params.id);
 });
 
 //'webpage'/documentation (or any file in public folder) functionality
