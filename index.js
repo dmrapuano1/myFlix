@@ -35,7 +35,7 @@ app.get('/', function(req, res){
 });
 
 //Returns a list of all movies to the user
-app.get('/movies', function(req, res){
+app.get('/movies', (req, res) => {
     //Find all movies in database
     Movies.find()
     .then(function(movies){
@@ -52,9 +52,9 @@ app.get('/movies', function(req, res){
 // Returns individual title
 app.get('/movies/:Title', (req, res) => {
     //Returns target movie from database
-    Movies.findOne({Title: req.params.Title})
+    Movies.find({title: req.params.Title})
     .then(function(movie) {
-        res.json(movie);
+        res.status(201).json(movie);
     })
     //Catch for all errors
     .catch(function(error) {
@@ -63,23 +63,53 @@ app.get('/movies/:Title', (req, res) => {
     });
 });
 
-//Returns details about all genres (NEEDS FIX)
-// app.get('/genres', (req, res) => {
-//     Movies.genre.find()
-//     .then(function(genres) {
-//         res.status(201).json(genres)
-//     })
-//     .catch(function(error){
-//         console.error(error);
-//         res.status(500).send('Error ' + error);
-//     });
-// });
+//Returns details about all genres
+app.get('/genres', (req, res) => {
+    //Syntax to find all and return only the genre portion
+    Movies.find({}, 'genre')
+    .then(function(genres) {
+        res.status(201).json(genres)
+    })
+    .catch(function(error){
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
+});
 
-//Returns bio about director
-app.get('/directors/:director', (req, res) => {
-    res.json(topMovies.find((movie) => {
-        return movie.director === req.params.director;
-    }));
+//Returns details on singular genre
+app.get('/genres/:Genre', (req, res) => {
+    //Finds genre in movies object
+    Movies.findOne({'genre.name': req.params.Genre}, 'genre')
+    .then(function(genre) {
+        res.status(201).json(genre);
+    }).catch((error) => {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    })
+});
+
+//Returns details about all directors
+app.get('/directors', (req, res) => {
+    Movies.find({}, 'director')
+    .then(function(director) {
+        res.status(201).json(director)
+    })
+    .catch(function(error){
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    });
+});
+
+//Returns bio and details on a single director
+app.get('/directors/:Director', (req, res) => {
+    //Finds genre in movies object
+    Movies.findOne({'director.name': req.params.Director}, 'director')
+    .then(function(director) {
+        res.status(201).json(director);
+    }).catch((error) => {
+        console.error(error);
+        res.status(500).send('Error ' + error);
+    })
 });
 
 //Get all registered users
@@ -103,7 +133,7 @@ app.get('/users/:Username', (res, req) => {
     Users.findOne({Username: req.params.Username})
     //Returns user with requested username
     .then(function(user) {
-        res.json(user)
+        res.status(201).json(user)
     })
     //Catch for all errors
     .catch(function(error) {
@@ -132,7 +162,7 @@ app.put('/users/:Username', function(req, res) {
                 res.status(500).send('Error ' + error);
             } else {
                 //Returns user with updated information
-                res.json(updatedUser)
+                res.status(201).json(updatedUser)
             };
         })
 });
@@ -183,7 +213,7 @@ app.get('/users/:Username/movies', (res, req) => {
     Users.findOne({Username: req.params.Username})
     //Returns user's movie list
     .then(function(user) {
-        res.json(user.FavoriteMovies)
+        res.status(201).json(user.FavoriteMovies)
     })
     //Catch for all errors
     .catch(function(error) {
@@ -202,7 +232,7 @@ app.post('/users/:Username/movies/:MovieID', function(req, res) {
                 console.error(error);
                 res.status(500).send('Error ' + error)
             } else {
-                res.json(updatedUser);
+                res.status(201).json(updatedUser);
             };
         })
 });
