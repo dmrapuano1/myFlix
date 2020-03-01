@@ -147,27 +147,22 @@ app.get('/users/:Username', (req, res) => {
 //Update user's info by username
 app.put('/users/:Username', (req, res) => {
     //Pulls all users with :username
-    Users.findOneAndUpdate({username: req.params.Username}, {
-        //Sets user's info to body of request
-        $set : 
-        {
-            Username : req.body.Username,
+    Users.findOneAndUpdate({username: req.params.Username}, 
+        {$set: {
             Password : req.body.Password,
             Email : req.body.Email,
             Birthday : req.body.Birthday
         }},
         //States you want the document to be returned
-        {new: true},
-        function(error, updatedUser) {
-            //Catch for errors
-            if (error) {
-                console.error(error);
-                res.status(500).send('Error ' + error);
-            } else {
-                //Returns user with updated information
-                res.status(201).json(updatedUser)
-            }
+        {new: true})
+        .then(function(updatedUser) {
+            //Returns user with updated information
+            res.status(201).json(updatedUser)
         })
+        .catch(function(error) {
+            console.error(error);
+            res.status(500).send('Error ' + error);
+        });
 });
 
 //Creates an account
