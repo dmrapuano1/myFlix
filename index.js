@@ -6,7 +6,7 @@ uuid = require('uuid'),
 mongoose = require('mongoose'),
 Models = require('./models.js')
 
-// Sets app to use express framework from above
+// Sets use of express framework
 const app = express();
 
 //Allows express to use bodyParser
@@ -126,12 +126,16 @@ app.get('/users', (req, res) => {
 });
 
 //Get account by username
-app.get('/users/:Username', (res, req) => {
+app.get('/users/:Username', (req, res) => {
     //Look through database for username input by user
-    Users.findOne({Username: req.params.Username})
+    Users.find({username: req.params.Username})
     //Returns user with requested username
     .then(function(user) {
-        res.status(201).json(user)
+        if (!user) {
+            res.status(400).send('Username ' + req.params.Username + ' was not found.');
+        } else {
+            res.status(200).json(user);
+        }
     })
     //Catch for all errors
     .catch(function(error) {
@@ -141,11 +145,12 @@ app.get('/users/:Username', (res, req) => {
 });
 
 //Update user's info by username
-app.put('/users/:Username', function(req, res) {
+app.put('/users/:Username', (req, res) => {
     //Pulls all users with :username
-    Users.findOneAndUpdate({Username: req.params.Username}, 
+    Users.findOneAndUpdate({username: req.params.Username}, {
         //Sets user's info to body of request
-        {$set: {
+        $set : 
+        {
             Username : req.body.Username,
             Password : req.body.Password,
             Email : req.body.Email,
@@ -161,7 +166,7 @@ app.put('/users/:Username', function(req, res) {
             } else {
                 //Returns user with updated information
                 res.status(201).json(updatedUser)
-            };
+            }
         })
 });
 
@@ -170,25 +175,27 @@ app.put('/users/:Username', function(req, res) {
     Expected JSON format:
     {
     ID : Integer, (to be created by database)
-    Username : String,
-    Password : String,
-    Email : String,
-    Birthday : Date
+    username : String,
+    password : String,
+    email : String,
+    birthday : Date
     }
 */
 app.post('/accounts', (req, res) => {
     //Runs findOne on database to determine if username is already in database
-    Users.findOne({Username: req.body.Username}).then(function(user){
+    Users.findOne({username: req.body.Username})
+    .then(function(user){
         if (user){
             //Returns error if selected username already exists in database
             return res.status(400).send(req.body.User + ' already exists. Try another username.');
         } else {
             //Creates user if new username using same setup from models.js (note ID is missing on purpose)
-            Users.create({
-                Username: req.body.Username,
-                Password: req.body.Password,
-                Email: req.body.Email,
-                Birthday: req.body.Birthday
+            Users
+            .create({
+                username: req.body.Username,
+                password: req.body.Password,
+                email: req.body.Email,
+                birthday: req.body.Birthday
             })
             //Displays to user that the user has been created
             .then(function(user) {res.status(201).json(user)})
@@ -207,7 +214,7 @@ app.post('/accounts', (req, res) => {
 
 //Delete an account (unregister) by account ID
 app.delete('/users/:Username', (req, res) => {
-    Users.findByIdAndRemove({Username: req.params.Username})
+    Users.findByIdAndRemove({username: req.params.Username})
     .then(function(user) {
         if (!user) {
             res.status(400).send('Username ' + req.params.Username + ' was not found.');
@@ -222,12 +229,12 @@ app.delete('/users/:Username', (req, res) => {
 });
 
 //Pulls a user's favorite list
-app.get('/users/:Username/movies', (res, req) => {
+app.get('/users/:Username/movies', (req, res) => {
     //Look through database for username input by user
-    Users.findOne({Username: req.params.Username})
+    Users.findOne({username: req.params.Username}, 'favoriteMovies')
     //Returns user's movie list
-    .then(function(user) {
-        res.status(201).json(user.FavoriteMovies)
+    .then(function(movieList) {
+        res.status(201).json(movieList);
     })
     //Catch for all errors
     .catch(function(error) {
@@ -237,9 +244,9 @@ app.get('/users/:Username/movies', (res, req) => {
 });
 
 //Adds movie to user's favorite list
-app.post('/users/:Username/movies/:MovieID', function(req, res) {
-    Users.findOneAndUpdate({Username: req.params.Username},
-        {$push: {FavoriteMovies: req.params.MovieID}},
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({username: req.params.Username},
+        {$push: {favoriteMovies: req.params.MovieID}},
         {new: true},
         function(error, updatedUser) {
             if (error) {
@@ -251,7 +258,20 @@ app.post('/users/:Username/movies/:MovieID', function(req, res) {
         })
 });
 
-
+//Deletes movie from user's favorite list
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+    Users.findOneAndDelete({username: req.params.Username},
+        {$pull: {favoriteMovies: req.params.MovieID}},
+        {new: true},
+        function(error, updatedUser) {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error ' + error)
+            } else {
+                res.status(201).json(updatedUser);
+            };
+        })
+});
 
 //'webpage'/documentation (or any file in public folder) functionality
 app.use(express.static('public'));
