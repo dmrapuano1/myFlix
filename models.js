@@ -13,7 +13,6 @@ var movieSchema = mongoose.Schema({
         Name: String,
         Description: String,
     },
-    ImagePath: String,
     Featured: Boolean
 });
 
@@ -27,7 +26,7 @@ var userSchema = mongoose.Schema({
 });
 
 //Creating the model for both users and movies
-var Movie = mongoose.model('Moive', movieSchema);
+var Movie = mongoose.model('Movie', movieSchema);
 var User = mongoose.model('User', userSchema);
 
 //Exporting the models from above
