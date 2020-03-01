@@ -29,7 +29,7 @@ app.use(function (err, req, res, next) {
     res.render('error', { error: err });
 });
 
-// 'webpage'/ functionality
+// 'webpage/' functionality
 app.use(express.static('welcome'));
 
 //Returns a list of all movies to the user
@@ -250,6 +250,8 @@ app.post('/users/:Username/movies/:MovieID', function(req, res) {
             };
         })
 });
+
+
 
 //'webpage'/documentation (or any file in public folder) functionality
 app.use(express.static('public'));
