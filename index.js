@@ -128,7 +128,7 @@ app.get('/users', (req, res) => {
 //Get account by username
 app.get('/users/:Username', (req, res) => {
     //Look through database for username input by user
-    Users.find({username: req.params.Username})
+    Users.find({Username: req.params.Username})
     //Returns user with requested username
     .then(function(user) {
         if (!user) {
@@ -147,7 +147,7 @@ app.get('/users/:Username', (req, res) => {
 //Update user's info by username
 app.put('/users/:Username', (req, res) => {
     //Pulls all users with :username
-    Users.findOneAndUpdate({username: req.params.Username}, 
+    Users.findOneAndUpdate({Username: req.params.Username}, 
         {$set: {
             Username: req.body.Username,
             Password : req.body.Password,
@@ -179,7 +179,7 @@ app.put('/users/:Username', (req, res) => {
 */
 app.post('/accounts', (req, res) => {
     //Runs findOne on database to determine if username is already in database
-    Users.findOne({username: req.body.Username})
+    Users.findOne({Username: req.body.Username})
     .then(function(user){
         if (user){
             //Returns error if selected username already exists in database
@@ -210,7 +210,7 @@ app.post('/accounts', (req, res) => {
 
 //Delete an account (unregister) by account ID
 app.delete('/users/:Username', (req, res) => {
-    Users.findOneAndRemove({username: req.params.Username})
+    Users.findOneAndRemove({Username: req.params.Username})
     .then(function(user) {
         console.log(user);
         if (!user) {
@@ -228,7 +228,7 @@ app.delete('/users/:Username', (req, res) => {
 //Pulls a user's favorite list
 app.get('/users/:Username/movies', (req, res) => {
     //Look through database for username input by user
-    Users.findOne({username: req.params.Username}, 'favoriteMovies')
+    Users.findOne({Username: req.params.Username})
     //Returns user's movie list
     .then(function(movieList) {
         res.status(201).json(movieList);
@@ -241,12 +241,13 @@ app.get('/users/:Username/movies', (req, res) => {
 });
 
 //Adds movie to user's favorite list
-//Still broken
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
-    Users.findOneAndUpdate({username: req.params.Username},
+    Users.findOneAndUpdate({Username: req.params.Username},
+        //Add movie into list
         {$push: {FavoriteMovies: req.params.MovieID}},
         {new: true})
         .then(function(updatedUser) {
+            //Send updated list to user
             res.status(201).json(updatedUser);
         })
         .catch(function(error) {
@@ -256,24 +257,27 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 //Deletes movie from user's favorite list
-//Untested
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
-    Users.findOneAndDelete({username: req.params.Username},
-        {$pull: {favoriteMovies: req.params.MovieID}},
-        {new: true},
-        function(error, updatedUser) {
-            if (error) {
-                console.error(error);
-                res.status(500).send('Error ' + error)
-            } else {
-                res.status(201).json(updatedUser);
-            };
+    //Updates the movie list to not have selected movie
+    Users.findOneAndUpdate({Username: req.params.Username},
+        //pulls all instances of :MovieID
+        {$pull: {FavoriteMovies: req.params.MovieID}},
+        {new: true})
+        .then(function(updatedUser) {
+            //Returns updated list
+            res.status(201).json(updatedUser);
         })
+        .catch(function(error) {
+            console.log(error);
+            res.status(500).send('Error ' + error);
+        });
 });
 
 //'webpage'/documentation (or any file in public folder) functionality
 app.use(express.static('public'));
 
+//Has the app listen on selected port
 app.listen(8080);
 
+//Visual sign the app has started in console
 console.log('App is working on 8080')
