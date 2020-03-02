@@ -4,13 +4,20 @@ morgan = require('morgan'),
 bodyParser = require('body-parser'),
 uuid = require('uuid'),
 mongoose = require('mongoose'),
-Models = require('./models.js')
+Models = require('./models.js'),
+passport = require('passport');
 
 // Sets use of express framework
 const app = express();
 
 //Allows express to use bodyParser
 app.use(bodyParser.json());
+
+//Pulls in auth.js functionality
+var auth = require('./auth')(app);
+
+//Pulls in passport.js functionality
+require('./passport');
 
 //Pulls movies and users from models.js
 const Movies = Models.Movie;
