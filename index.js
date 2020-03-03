@@ -5,7 +5,8 @@ bodyParser = require('body-parser'),
 uuid = require('uuid'),
 mongoose = require('mongoose'),
 Models = require('./models.js'),
-passport = require('passport');
+passport = require('passport'),
+cors = require('cors');
 
 // Sets use of express framework
 const app = express();
@@ -18,6 +19,12 @@ var auth = require('./auth')(app);
 
 //Pulls in passport.js functionality
 require('./passport');
+
+//Has express use CORS
+app.use(cors());
+
+//Requires express validator
+const { check, validationResult } = require('express-validator');
 
 //Pulls movies and users from models.js
 const Movies = Models.Movie;
@@ -35,6 +42,31 @@ app.use(function (err, req, res, next) {
     res.status(500);
     res.render('error', { error: err });
 });
+
+//Function to check form entries and change password to hashedPassword
+var checkFields = function(req, res){
+    //Form validator for input fields
+    //Checks username >= 5 characters
+    [check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
+    //Ensures username is alpha-numeric
+    check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
+    //Ensures password is not empty
+    check('Password', 'Password is required').not().isEmpty(),
+    //Ensures email is valid form
+    check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
+    ],(req, res) => {
+        //Checks validations for errors
+        var errors = validationResult(req);
+
+        //If there are errors, returns those errors
+        if(!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()});
+        };
+    }
+    //hashes entered password
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    return hashedPassword;
+}
 
 // 'webpage/' functionality
 app.use(express.static('welcome'));
@@ -185,6 +217,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
     }
 */
 app.post('/accounts', (req, res) => {
+    var hashedPassword = checkFields(req, res);
     //Runs findOne on database to determine if username is already in database
     Users.findOne({Username: req.body.Username})
     .then(function(user){
@@ -196,7 +229,7 @@ app.post('/accounts', (req, res) => {
             Users
             .create({
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })
@@ -249,6 +282,7 @@ app.get('/users/:Username/movies', passport.authenticate('jwt', {session: false}
 
 //Adds movie to user's favorite list
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
+    var hashedPassword = checkFields(req, res);
     Users.findOneAndUpdate({Username: req.params.Username},
         //Add movie into list
         {$push: {FavoriteMovies: req.params.MovieID}},
