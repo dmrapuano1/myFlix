@@ -12,7 +12,7 @@ passport.use(new LocalStrategy({
     passwordField: 'Password'
 }, (Username, Password, callback) => {
     console.log(Username + ' ' + Password);
-    Users.findOne({Username: Username}, (error, users) => {
+    Users.findOne({Username: Username}, (error, user) => {
         if (error) {
             console.log(error);
             return callback(error);
@@ -33,7 +33,7 @@ passport.use(new JWTStrategy({
     return Users.findById(jwtPayload._id)
     .then((user) => {
         return callback(null, user);
-    });
+    })
     .catch((error) => {
         return callback(error)
     });
