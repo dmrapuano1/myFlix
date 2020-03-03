@@ -317,8 +317,9 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {ses
 //'webpage'/documentation (or any file in public folder) functionality
 app.use(express.static('public'));
 
-//Has the app listen on selected port
-app.listen(8080);
-
-//Visual sign the app has started in console
-console.log('App is working on 8080')
+//Having the app listen on a free port
+var port = process.env.PORT || 3000
+app.listen(port, "0.0.0.0", function() {
+    //Visual sign the app has started in console
+    console.log(`Listening on Port ${port}`)
+});
