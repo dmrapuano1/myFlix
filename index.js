@@ -45,31 +45,6 @@ app.use(function (err, req, res, next) {
     res.render('error', { error: err });
 });
 
-//Function to check form entries and change password to hashedPassword
-var checkFields = function(req, res){
-    //Form validator for input fields
-    //Checks username >= 5 characters
-    [check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
-    //Ensures username is alpha-numeric
-    check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
-    //Ensures password is not empty
-    check('Password', 'Password is required').not().isEmpty(),
-    //Ensures email is valid form
-    check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
-    ],(req, res) => {
-        //Checks validations for errors
-        var errors = validationResult(req);
-
-        //If there are errors, returns those errors
-        if(!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
-        };
-    }
-    //hashes entered password
-    var hashedPassword = Users.hashPassword(req.body.Password);
-    return hashedPassword;
-}
-
 // 'webpage/' functionality
 app.use(express.static('welcome'));
 
@@ -187,6 +162,27 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
 
 //Update user's info by username
 app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+    //Form validator for input fields
+    //Checks username >= 5 characters
+    [check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
+    //Ensures username is alpha-numeric
+    check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
+    //Ensures password is not empty
+    check('Password', 'Password is required').not().isEmpty(),
+    //Ensures email is valid form
+    check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
+    ],(req, res) => {
+        //Checks validations for errors
+        var errors = validationResult(req);
+
+        //If there are errors, returns those errors
+        if(!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()});
+        };
+    }
+    //hashes entered password
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    
     //Pulls all users with :username
     Users.findOneAndUpdate({Username: req.params.Username}, 
         {$set: {
@@ -219,7 +215,27 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
     }
 */
 app.post('/accounts', (req, res) => {
-    var hashedPassword = checkFields(req, res);
+    //Form validator for input fields
+    //Checks username >= 5 characters
+    [check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
+    //Ensures username is alpha-numeric
+    check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
+    //Ensures password is not empty
+    check('Password', 'Password is required').not().isEmpty(),
+    //Ensures email is valid form
+    check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
+    ],(req, res) => {
+        //Checks validations for errors
+        var errors = validationResult(req);
+
+        //If there are errors, returns those errors
+        if(!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()});
+        };
+    }
+    //hashes entered password
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    
     //Runs findOne on database to determine if username is already in database
     Users.findOne({Username: req.body.Username})
     .then(function(user){
