@@ -267,7 +267,7 @@ check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()
 });
 
 //Fix for <script> delete
-app.delete('id/:id', (req, res) => {
+app.delete('/id/:id', (req, res) => {
     Users.findOneAndRemove({_id: req.params._id})
     .then(function(user) {
         console.log(user);
