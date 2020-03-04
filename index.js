@@ -33,7 +33,7 @@ const Users = Models.User
 //Connects mongoose to the MongoDB needed (myFlixDB)
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 //Connects mongoose to online db instead of localhost (note process.env.CONNECTION_URI is a way to keep information secure)
-mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true});
+mongoose.connect(process.env.atlas_connect, {useNewUrlParser: true});
 
 // Middleware that logs all navigation to webpage
 app.use(morgan('common'));
