@@ -266,23 +266,6 @@ check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()
     });
 });
 
-//Fix for <script> delete
-app.delete('/id/:id', (req, res) => {
-    Users.findOneAndRemove({_id: req.params._id})
-    .then(function(user) {
-        console.log(user);
-        if (!user) {
-            res.status(400).send('Username ' + req.params.Username + ' was not found.');
-        } else {
-            res.status(200).send(req.params.Username + ' was deleted.');
-        }
-    })
-    .catch(function (error) {
-        console.error(error);
-        res.status(500).send('Error ' + error);
-    });
-})
-
 //Delete an account (unregister) by account ID
 app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndRemove({Username: req.params.Username})
