@@ -161,25 +161,25 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
 });
 
 //Update user's info by username
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
-    //Form validator for input fields
-    //Checks username >= 5 characters
-    [check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
-    //Ensures username is alpha-numeric
-    check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
-    //Ensures password is not empty
-    check('Password', 'Password is required').not().isEmpty(),
-    //Ensures email is valid form
-    check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
-    ],(req, res) => {
-        //Checks validations for errors
-        var errors = validationResult(req);
+app.put('/users/:Username', passport.authenticate('jwt', {session: false}), 
+//Form validator for input fields
+//Checks username >= 5 characters
+[check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
+//Ensures username is alpha-numeric
+check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
+//Ensures password is not empty
+check('Password', 'Password is required').not().isEmpty(),
+//Ensures email is valid form
+check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
+],(req, res) => {
+    //Checks validations for errors
+    var errors = validationResult(req);
 
-        //If there are errors, returns those errors
-        if(!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
-        };
-    }
+    //If there are errors, returns those errors
+    if(!errors.isEmpty()) {
+        return res.status(422).json({errors: errors.array()});
+    };
+    
     //hashes entered password
     var hashedPassword = Users.hashPassword(req.body.Password);
     
@@ -214,25 +214,25 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
     Birthday : Date
     }
 */
-app.post('/accounts', (req, res) => {
-    //Form validator for input fields
-    //Checks username >= 5 characters
-    [check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
-    //Ensures username is alpha-numeric
-    check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
-    //Ensures password is not empty
-    check('Password', 'Password is required').not().isEmpty(),
-    //Ensures email is valid form
-    check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
-    ],(req, res) => {
-        //Checks validations for errors
-        var errors = validationResult(req);
+app.post('/accounts',
+//Form validator for input fields
+//Checks username >= 5 characters
+[check('Username', 'Username is required to be at least 5 characters.').isLength({min:5}),
+//Ensures username is alpha-numeric
+check('Username', 'Username can only contain alpha-numeric characters.').isAlphanumeric(),
+//Ensures password is not empty
+check('Password', 'Password is required').not().isEmpty(),
+//Ensures email is valid form
+check('Email', 'Invalid email. PLease enter a valid email address.').isEmail()    
+], (req, res) => {
+    //Checks validations for errors
+    var errors = validationResult(req);
 
-        //If there are errors, returns those errors
-        if(!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
-        };
-    }
+    //If there are errors, returns those errors
+    if(!errors.isEmpty()) {
+        return res.status(422).json({errors: errors.array()});
+    };
+    
     //hashes entered password
     var hashedPassword = Users.hashPassword(req.body.Password);
     
