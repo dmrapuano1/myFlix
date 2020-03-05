@@ -1,9 +1,11 @@
 # myFlix Database (myFlixDB)
 This project is designed to create a database and API system. The process taken creates a database of movies and users and allows any user to add themselves to the list of users, and then edit a list of favorite movies to be under their user ID. This is done with mainly through the use of node.js, express, and mongoose. 
+
 ---
 
 # Getting Started
 To get started, you need to download the repository in GitHub. This will give you the framework for the API system and the functionality behind the URL endpoints. If you have a online database (like MongoDB Atlas), replace 'process.env.atlas_connect' on line 36 of index.js with the connection string. You can also use the code written to connect to a local database. To do so, comment out line 36 of index.js and uncomment line 34. This will use a local MongoDB to run the application. If you do not have the local MongoDB and would like to use that, see the [official site](https://docs.mongodb.com/manual/administration/install-community/) for details on how to download on Window, Mac, or Linux. 
+
 ---
 
 # Prerequisites
@@ -17,6 +19,7 @@ npm install morgan uuid
 npm install passport passport-jwt passport-local
 ```
 Note: for a list of all dependencies and the current version please see the package.json file on this repository.
+
 ---
 
 # Walk through
@@ -60,17 +63,20 @@ After you have a username and password, make another new URl request. This will 
 After you have the token for your login, you can use it to access other endpoints of the application. (If you do not have a token, see above section on how to get one.) See documentation.html for a full list of endpoints and HTTP request types to navigate the API and database, but for this example, we will be navigating to the list of movies. 
 
 Create another new URL request in Postman to *GET* *localhost:8080/movies*. Before sending the request, go to *Authorization* and change the type of *Bearer Token*. In the text box to the left, copy and paste the token created previously. Send the request and you will see the movies in the database. Same process can be used for any endpoint with the *POST* endpoints needing a body request similar to the one shown in *Creating and Account*.
+
 ---
 
 # Built With
-MongoDB - Database used (MongoDB Atlas for online use)
-Express - Web application framework used
-Node.js - Script interpreter used
-Please see *Prerequisites* above or the package.json file for dependencies used
+* MongoDB - Database used (MongoDB Atlas for online use)
+* Express - Web application framework used
+* Node.js - Script interpreter used
+* Please see *Prerequisites* above or the package.json file for dependencies used
+
 ---
 
 # Authors
 Dominick Rapuano
+
 ---
 
 # Acknowledgments 
