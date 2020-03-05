@@ -59,7 +59,7 @@ After you have a username and password, make another new URl request. This will 
 ### Using other endpoints to access the database (index.js)
 After you have the token for your login, you can use it to access other endpoints of the application. (If you do not have a token, see above section on how to get one.) See documentation.html for a full list of endpoints and HTTP request types to navigate the API and database, but for this example, we will be navigating to the list of movies. 
 
-Create another new URL request in Postman to *GET* **localhost:8080/movies**. Before sending the request, go to *Authorization* and change the type of *Bearer Token*. In the text box to the left, copy and paste the token created previously. Send the request and you will see the movies in the database. Same process can be used for any endpoint with the *POST* endpoints needing a body request similar to the one shown in *Creating and Account*.
+Create another new URL request in Postman to *GET* *localhost:8080/movies*. Before sending the request, go to *Authorization* and change the type of *Bearer Token*. In the text box to the left, copy and paste the token created previously. Send the request and you will see the movies in the database. Same process can be used for any endpoint with the *POST* endpoints needing a body request similar to the one shown in *Creating and Account*.
 ---
 
 # Built With
