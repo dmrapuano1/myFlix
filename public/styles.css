@@ -1,8 +1,20 @@
 table, th, td {
     border: 1px solid gray;
     border-collapse: collapse;
+    min-width: 150px;
 };
 
 th {
     text-align: center;
+}
+p {
+    margin: 0;
+}
+
+.singleTab {
+    margin-left: 25px;
+}
+
+.doubleTab {
+    margin-left: 50px;
 }
