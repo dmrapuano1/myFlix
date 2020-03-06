@@ -9,16 +9,11 @@ To get started, you need to download the repository in GitHub. This will give yo
 ---
 
 # Prerequisites
-In your terminal, you will need to have node installed. To download, simply type `sudo apt install nodejs`. After this has downloaded, check the version of npm by typing `npm -v`. If this is not up to date automatically, follow the prompts, otherwise use npm to download the required dependencies. Note There are 14 in all and all but `express-generator` needs to be installed in the directory you are building the application in. I recommend, for simplicity, be in the directory downloaded from GitHub when running every command due to the `--global` key installing `express-generator` in the correct folder.
+In your terminal, you will need to have node installed. To download, simply type `sudo apt install nodejs`. After this has downloaded, check the version of npm by typing `npm -v`. If this is not up to date automatically, follow the prompts, otherwise use npm to download the required dependencies. Note There are 14 in all and all but `express-generator` needs to be installed in the directory you are building the application in. To download all nessicary dependencies, navigate to the directory where the files downloaded and type the command 
 ```
-npm install --global express-generator
-npm install bcrypt body-parser cors
-npm install express express-validator
-npm install jsonwebtoken lodash mongoose
-npm install morgan uuid
-npm install passport passport-jwt passport-local
+npm install
 ```
-Note: for a list of all dependencies and the current version please see the package.json file on this repository.
+This will automatically check the package.json file and download the required dependencies.
 
 ---
 
