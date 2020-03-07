@@ -20,20 +20,8 @@ var auth = require('./auth')(app);
 //Pulls in passport.js functionality
 require('./passport');
 
-//Sets allowed origins for CORS
-var allowedOrigins = ['http://localhost:1234']
-
 //Has express use CORS
-app.use(cors({
-    origin: function(origin, callback) {
-        if(!origin) return callback(null, true);
-        if(allowedOrigins.indexOf(origin) === -1) {
-            var message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
+app.use(cors());
 
 //Requires express validator
 const { check, validationResult } = require('express-validator');
@@ -66,7 +54,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
     Movies.find()
     .then(function(movies){
         //Returns movies to user
-        res.header("Access-Control-Allow-Origin", "*").status(201).json(movies)
+        res.status(201).json(movies)
     })
     //Catch for all errors
     .catch(function(error){
