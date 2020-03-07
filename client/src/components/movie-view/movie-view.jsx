@@ -1,4 +1,10 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import CardGroup from 'react-bootstrap/CardGroup';
+import Row from 'react-bootstrap/Row';
+
+require('./movie-view.scss');
 
 export class MovieView extends React.Component {
   constructor() {
@@ -13,8 +19,10 @@ export class MovieView extends React.Component {
     if (!movie) return null;
 
     return (
-      <div className="movie-view">
-        <img className="movie-poster" src={movie.image}/>
+      <div className="movie-group">
+        <div className="movie-picture">
+          <img className="movie-poster" src={movie.imagePath}/>
+        </div>
         <div className="movie-title">
           <span className="label">Title: </span>
           <span className="value">{movie.title}</span>
@@ -31,7 +39,7 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.director.name}</span>
         </div>
-        <button onClick={() => onClick()} className="return-button">Back</button>
+        <Button variant="primary" onClick={() => onClick()} className="return-button">Back</Button>
       </div>
 
     );
