@@ -62,7 +62,7 @@ app.use(function (err, req, res, next) {
 app.use(express.static('welcome'));
 
 //Returns a list of all movies to the user
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     //Find all movies in database
     Movies.find()
     .then(function(movies){
