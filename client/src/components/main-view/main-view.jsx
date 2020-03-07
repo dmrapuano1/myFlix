@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import CardColumns from 'react-bootstrap/CardColumns';
-import CardDeck from 'react-bootstrap/CardDeck';
-import CardGroup from 'react-bootstrap/CardGroup';
 
 import {LoginView} from '../login-view/login-view';
 import {RegisterView} from '../registration-view/registration-view';
@@ -52,14 +50,27 @@ export class MainView extends React.Component {
 
   onLoggedIn(authData) {
     console.log(authData + ' authData');
-    console.log(authData.token + ' token')
     this.setState({
       user: authData.Username
     });
 
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.Username);
-    // this.getMovies(authData.token);
+    this.getMovies(authData.token);
+  }
+
+  getMovies(token) {
+    axios.get("https://rapuano-flix.herokuapp.com/movies", {
+      headers: {Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        movies: response.data
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   onRegister(newUser) {
