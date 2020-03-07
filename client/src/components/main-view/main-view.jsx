@@ -50,10 +50,16 @@ export class MainView extends React.Component {
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
+    console.log(authData + ' authData');
+    console.log(authData.token + ' token')
     this.setState({
-      user
+      user: authData.Username
     });
+
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.Username);
+    // this.getMovies(authData.token);
   }
 
   onRegister(newUser) {
