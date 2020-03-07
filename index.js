@@ -35,9 +35,6 @@ app.use(cors({
     }
 }));
 
-// Adds Access-Control to Allow all origins to each endpoint
-allowAll = res.header("Access-Control-Allow-Origin", "*");
-
 //Requires express validator
 const { check, validationResult } = require('express-validator');
 
@@ -65,10 +62,10 @@ app.use(express.static('welcome'));
 
 //Returns a list of all movies to the user
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
-    allowAll();
     //Find all movies in database
     Movies.find()
     .then(function(movies){
+        res.header("Access-Control-Allow-Origin", "*")
         //Returns movies to user
         res.status(201).json(movies)
     })
