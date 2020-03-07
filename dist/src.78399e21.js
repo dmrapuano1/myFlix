@@ -33018,16 +33018,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
   _createClass(MainView, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// axios.get('https://rapuano-flix.herokuapp.com/movies')
-      //   .then(response => {
-      //     // Assign the result to the state
-      //     this.setState({
-      //       movies: response.data
-      //     });
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
+    value: function componentDidMount() {
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        this.setState({
+          user: localStorage.getItem('user')
+        });
+        this.getMovies(accessToken);
+      }
     }
   }, {
     key: "onMovieClick",
@@ -33215,7 +33214,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61193" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63130" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
