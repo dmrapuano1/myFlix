@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 require('./login-view.scss');
 
@@ -10,9 +11,18 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(Username, Password);
-    //Authentication logic here later
-    props.onLoggedIn(Username);
+    //Sends request to server
+    axios.post('http://rapuano-flix.herokuapp.com/login', {
+      Username: Username,
+      Password: Password
+    })
+    .then(response => {
+      const data = response.data
+      props.onLoggedIn(data);
+    })
+    .catch(error => {
+      console.log('No user found');
+    });
   };
 
   const handleRegister = (e) => {
