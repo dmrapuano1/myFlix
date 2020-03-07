@@ -33018,15 +33018,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
   _createClass(MainView, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var accessToken = localStorage.getItem('token');
-
-      if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user')
-        });
-        this.getMovies(accessToken);
-      }
+    value: function componentDidMount() {// axios.get('https://rapuano-flix.herokuapp.com/movies')
+      //   .then(response => {
+      //     // Assign the result to the state
+      //     this.setState({
+      //       movies: response.data
+      //     });
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
     }
   }, {
     key: "onMovieClick",
