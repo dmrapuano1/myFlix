@@ -1,3 +1,39 @@
+.form {
+  color: white;
+  width: 300px;
+  text-align: center;
+}
+
+.log_button {
+  width: 100px;
+}
+.reg_button {
+  width: 125px;
+}
+body {
+  color: black;
+}
+body {
+  color: black;
+}
+
+.movie-picture {
+  margin-left: 52.5%;
+}
+
+.movie-group, .movie-picture, .movie-card {
+  border: none;
+  color: white;
+}
+
+.label {
+  font-weight: bold;
+}
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #405d27;
+}
 .my-flix {
   color: seagreen;
 }
