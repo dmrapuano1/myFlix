@@ -21,10 +21,19 @@ var auth = require('./auth')(app);
 require('./passport');
 
 //Sets allowed origins for CORS
-Access-Control-Allow-Origin: *
+var allowedOrigins = ['http://localhost:1234']
 
 //Has express use CORS
-app.use(cors())
+app.use(cors({
+    origin: function(origin, callback) {
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1) {
+            var message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
 
 
 //Requires express validator
