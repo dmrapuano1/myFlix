@@ -65,9 +65,8 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
     //Find all movies in database
     Movies.find()
     .then(function(movies){
-        res.header("Access-Control-Allow-Origin", "*")
         //Returns movies to user
-        res.status(201).json(movies)
+        res.header("Access-Control-Allow-Origin", "*").status(201).json(movies)
     })
     //Catch for all errors
     .catch(function(error){
