@@ -33018,17 +33018,16 @@ var MainView = /*#__PURE__*/function (_React$Component) {
 
   _createClass(MainView, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _axios.default.get('https://rapuano-flix.herokuapp.com/movies').then(function (response) {
-        // Assign the result to the state
-        _this2.setState({
-          movies: response.data
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
+    value: function componentDidMount() {// axios.get('https://rapuano-flix.herokuapp.com/movies')
+      //   .then(response => {
+      //     // Assign the result to the state
+      //     this.setState({
+      //       movies: response.data
+      //     });
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
     }
   }, {
     key: "onMovieClick",
@@ -33049,23 +33048,23 @@ var MainView = /*#__PURE__*/function (_React$Component) {
     value: function onLoggedIn(authData) {
       console.log(authData + ' authData');
       this.setState({
-        user: authData.Username
+        user: authData.user.Username
       });
       localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.Username);
+      localStorage.setItem('user', authData.user.Username);
       this.getMovies(authData.token);
     }
   }, {
     key: "getMovies",
     value: function getMovies(token) {
-      var _this3 = this;
+      var _this2 = this;
 
       _axios.default.get("https://rapuano-flix.herokuapp.com/movies", {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        _this3.setState({
+        _this2.setState({
           movies: response.data
         });
       }).catch(function (error) {
@@ -33082,7 +33081,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       // If the state isn't initialized, this will throw on runtime before the data is initially loaded
       var _this$state = this.state,
@@ -33092,15 +33091,15 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           newUser = _this$state.newUser;
       if (!newUser) return _react.default.createElement(_registrationView.RegisterView, {
         onRegister: function onRegister(newUser) {
-          return _this4.onRegister(newUser);
+          return _this3.onRegister(newUser);
         }
       });
       if (!user) return _react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this4.onLoggedIn(user);
+          return _this3.onLoggedIn(user);
         },
         onRegister: function onRegister(newUser) {
-          return _this4.onRegister(newUser);
+          return _this3.onRegister(newUser);
         }
       }); // Before the movies have been loaded
 
@@ -33110,14 +33109,14 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       return _react.default.createElement(_CardColumns.default, null, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
         movie: selectedMovie,
         onClick: function onClick() {
-          return _this4.onBackClick();
+          return _this3.onBackClick();
         }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
           movie: movie,
           onClick: function onClick(movie) {
-            return _this4.onMovieClick(movie);
+            return _this3.onMovieClick(movie);
           }
         });
       }));

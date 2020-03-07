@@ -24,16 +24,16 @@ export class MainView extends React.Component {
   };
 
   componentDidMount() {
-    axios.get('https://rapuano-flix.herokuapp.com/movies')
-      .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios.get('https://rapuano-flix.herokuapp.com/movies')
+    //   .then(response => {
+    //     // Assign the result to the state
+    //     this.setState({
+    //       movies: response.data
+    //     });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
 
   onMovieClick(movie) {
@@ -51,11 +51,11 @@ export class MainView extends React.Component {
   onLoggedIn(authData) {
     console.log(authData + ' authData');
     this.setState({
-      user: authData.Username
+      user: authData.user.Username
     });
 
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.Username);
+    localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
   }
 
