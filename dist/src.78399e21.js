@@ -33054,6 +33054,12 @@ var MainView = /*#__PURE__*/function (_React$Component) {
       this.getMovies(authData.token);
     }
   }, {
+    key: "logOut",
+    value: function logOut() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
+  }, {
     key: "getMovies",
     value: function getMovies(token) {
       var _this2 = this;
