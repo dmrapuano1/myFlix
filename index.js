@@ -6,7 +6,7 @@ uuid = require('uuid'),
 mongoose = require('mongoose'),
 Models = require('./models.js'),
 passport = require('passport'),
-cors = require('cors');
+// cors = require('cors');
 
 // Sets use of express framework
 const app = express();
@@ -21,13 +21,13 @@ var auth = require('./auth')(app);
 require('./passport');
 
 //Has express use CORS
-app.use(cors());
+// app.use(cors());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-  });
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+//   });
 
 //Requires express validator
 const { check, validationResult } = require('express-validator');
