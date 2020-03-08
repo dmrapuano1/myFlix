@@ -24,25 +24,25 @@ export function RegisterView(props) {
   }
 
   return (
-    <Form className="form">
+    <Form className="form" ref={this.form}>
       <Form.Group controlId="Username">
         <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" value={Username} placeholder="Enter alpha-numeric username" onChange={e => setUsername(e.target.value)}/>
+        <Form.Control type="text" value={Username} placeholder="Enter alpha-numeric username" required onChange={e => setUsername(e.target.value)}/>
       </Form.Group>
       
       <Form.Group controlId="Password">
         <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" value={Password} placeholder="Enter desired password" onChange={e => setPassword(e.target.value)}/>
+        <Form.Control type="password" value={Password} placeholder="Enter desired password" required onChange={e => setPassword(e.target.value)}/>
       </Form.Group>
 
       <Form.Group controlId="Email">
         <Form.Label>E-mail:</Form.Label>
-        <Form.Control type="text" value={Email} placeholder="Enter your e-mail" onChange={e => setEmail(e.target.value)}/>
+        <Form.Control type="email" value={Email} placeholder="Enter your e-mail" required onChange={e => setEmail(e.target.value)}/>
       </Form.Group>
 
       <Form.Group controlId="Birthday">
         <Form.Label>Birthday:</Form.Label>
-        <Form.Control type="text" value={Birthday} placeholder="Enter as YYYY-MM-DD. Optional" onChange={e => setBirthday(e.target.value)}/>
+        <Form.Control type="date" max={Date()} value={Birthday} placeholder="Enter as YYYY-MM-DD. Optional" onChange={e => setBirthday(e.target.value)}/>
       </Form.Group>
       
       <Button variant="primary" type="button" className="reg_button" onClick={handleSubmit}>Register Now!</Button>
