@@ -11,6 +11,9 @@ cors = require('cors');
 // Sets use of express framework
 const app = express();
 
+//Has express use CORS
+app.use(cors());
+
 //Allows express to use bodyParser
 app.use(bodyParser.json());
 
@@ -19,15 +22,6 @@ var auth = require('./auth')(app);
 
 //Pulls in passport.js functionality
 require('./passport');
-
-//Has express use CORS
-app.use(cors());
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-  });
 
 //Requires express validator
 const { check, validationResult } = require('express-validator');
