@@ -3,6 +3,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
+import {RegisterView} from '../registration-view/registration-view';
+
 require('./login-view.scss');
 
 export function LoginView(props) {
@@ -26,6 +28,7 @@ export function LoginView(props) {
   };
 
   const handleRegister = (e) => {
+    var Username = null;
     props.onRegister(Username);
   }
 
@@ -42,8 +45,9 @@ export function LoginView(props) {
       </Form.Group>
 
       <Button variant="primary" type="button" className="log_button" onClick={handleSubmit}>Submit</Button>
-      <Button variant="secondary" type="button" className="log_button" onClick={handleRegister}>Register</Button>
+      <Button variant="secondary" type="button" className="reg_button" onClick={handleRegister}>Register</Button>
     </Form>
+    
   );
 
 }
