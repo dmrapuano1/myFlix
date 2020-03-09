@@ -49,5 +49,5 @@ export function RegisterView(props) {
       <Button variant="secondary" type="button" className="reg_button" onClick={handleBack}>Existing user</Button>
     </Form>
   );
-
 }
+

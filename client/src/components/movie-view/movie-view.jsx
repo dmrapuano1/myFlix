@@ -1,8 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import CardGroup from 'react-bootstrap/CardGroup';
-import Row from 'react-bootstrap/Row';
+import PropTypes from 'prop-types';
 
 require('./movie-view.scss');
 
@@ -44,4 +42,14 @@ export class MovieView extends React.Component {
 
     );
   }
+}
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    imagePath: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    genre: PropTypes.object.isRequired,
+    director: PropTypes.object.isRequired
+  }).isRequired,
 }

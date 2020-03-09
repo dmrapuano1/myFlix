@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
 import CardColumns from 'react-bootstrap/CardColumns';
+import PropTypes from 'prop-types';
 
 import {LoginView} from '../login-view/login-view';
 import {RegisterView} from '../registration-view/registration-view';
@@ -97,4 +97,24 @@ export class MainView extends React.Component {
      </CardColumns>
     );
   }
+}
+
+MainView.propTypes = {
+  MovieView: PropTypes.shape({
+    movie: PropTypes.shape({
+      imagePath: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      genre: PropTypes.object.isRequired,
+      director: PropTypes.object.isRequired
+    }).isRequired,
+  }),
+  MovieCard: PropTypes.shape({
+    movie: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      imagePath: PropTypes.string.isRequired
+    }).isRequired,
+    onClick: PropTypes.func.isRequired
+  })
 }
