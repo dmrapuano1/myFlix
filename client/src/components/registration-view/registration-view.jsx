@@ -24,7 +24,7 @@ export function RegisterView(props) {
   }
 
   return (
-    <Form className="form" ref={this.form}>
+    <Form className="form">
       <Form.Group controlId="Username">
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" value={Username} placeholder="Enter alpha-numeric username" required onChange={e => setUsername(e.target.value)}/>
