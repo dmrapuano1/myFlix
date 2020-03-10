@@ -105,7 +105,14 @@ app.get('/genres/:Genre', passport.authenticate('jwt', {session: false}), (req, 
 //Returns details about all directors
 app.get('/directors', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.find({}, 'director')
-    .then(function(director) {
+    .then(function(data) {
+        let json_data = JSON.parse(data);
+        let directors = [];
+        for (i=0; i < json_data.length; i++) {
+            if (directors.indexOf(json_data) === -1) {
+                directors.push(jason_data);
+            };
+        }
         res.status(201).json(directors)
     })
     .catch(function(error){
