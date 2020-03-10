@@ -106,7 +106,7 @@ app.get('/genres/:Genre', passport.authenticate('jwt', {session: false}), (req, 
 app.get('/directors', passport.authenticate('jwt', {session: false}), (req, res) => {
     Movies.find({}, 'director')
     .then(function(director) {
-        res.status(201).json(directors)
+        res.status(201).json(director)
     })
     .catch(function(error){
         console.error(error);
