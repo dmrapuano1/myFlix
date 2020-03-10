@@ -16,6 +16,7 @@ import {DirectorView} from '../director-view/director-view';
 import {GenreView} from '../genre-view/genre-view';
 import {MovieCard} from '../movie-card/movie-card';
 import {MovieView} from '../movie-view/movie-view';
+import {DirectorCard} from '../director-view/director-card';
 
 require('./main-view.scss');
 
@@ -152,7 +153,7 @@ export class MainView extends React.Component {
               </Row>}/>
             <Route path="/directors/:director" render={ ({match}) =>
               <CardColumns>
-                <MovieView movie={movies.find( m => m.director.name === match.params.director)}/>
+                <DirectorCard movie={movies.find( m => m.director.name === match.params.director)}/>
               </CardColumns>}/>
             <Route path="/genres" render={() => 
               <Row className="mx-auto">
