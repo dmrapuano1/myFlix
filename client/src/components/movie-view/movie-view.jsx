@@ -2,6 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 require('./movie-view.scss');
 
 export class MovieView extends React.Component {
@@ -37,7 +39,9 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.director.name}</span>
         </div>
-        <Button variant="primary" onClick={() => onClick()} className="return-button">Back</Button>
+        <Link to={`/`}>
+          <Button variant="primary">Back</Button>
+        </Link>
       </div>
 
     );
