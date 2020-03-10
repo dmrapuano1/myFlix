@@ -108,13 +108,11 @@ app.get('/directors', passport.authenticate('jwt', {session: false}), (req, res)
     .then(function(data) {
         let json_data = JSON.parse(data);
         let directors = [];
-        console.log('no issue');
         for (i=0; i < json_data.length; i++) {
             if (directors.indexOf(json_data) === -1) {
                 directors.push(jason_data);
             };
         }
-        console.log(directors);
         res.status(201).json(directors)
     })
     .catch(function(error){
