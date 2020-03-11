@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 
 import {Link} from 'react-router-dom';
+import {NoFavorites} from './noFavorites';
 
 require('./profile-view.scss');
 
@@ -15,7 +16,7 @@ export class ProfileView extends React.Component {
   };
 
   render() {
-    const {movie} = this.props;
+    const {movie, onClick} = this.props;
 
     if (!movie) return <NoFavorites/>
 
@@ -28,9 +29,7 @@ export class ProfileView extends React.Component {
           <Link to={`/movies/${movie._id}`}>
             <Button variant="info">Details</Button>
           </Link>
-          <Link to={`/movies/${movie._id}`}>
-            <Button variant="danger">Remove</Button>
-          </Link>
+          <Button variant="danger" onClick={() => onClick(movie._id)}>Remove</Button>
         </Card.Body>
       </Card>
     );
