@@ -70,7 +70,7 @@ export class ProfileView extends React.Component {
 
   render() {
 
-    const {user, Password, setPassword, Email, setEmail, Birthday, setBirthday, Username} = this.props
+    const {user, Password, setPassword, Email, setEmail, Birthday, setBirthday, favorites, Username} = this.props
 
     if(!user) return null
 
@@ -88,6 +88,8 @@ export class ProfileView extends React.Component {
                 <Card.Text>{user.Email}</Card.Text>
                 <Card.Text className="head-text">Birthday:</Card.Text>
                 <Card.Text>{user.Birthday}</Card.Text>
+                <Card.Text className="head-text">Favorite Movies:</Card.Text>
+                <Card.Text>{favorites}</Card.Text>
                 <Button variant="danger" onClick= {() => this.handleDelete(event, user)}>Delete Account</Button>
               </Card.Body>
             </Card>
