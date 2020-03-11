@@ -300,7 +300,7 @@ app.get('/users/:Username/movies', passport.authenticate('jwt', {session: false}
 
 //Adds movie to user's favorite list
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
-    var hashedPassword = checkFields(req, res);
+    //Finds user to add movie to
     Users.findOneAndUpdate({Username: req.params.Username},
         //Add movie into list
         {$push: {FavoriteMovies: req.params.MovieID}},
