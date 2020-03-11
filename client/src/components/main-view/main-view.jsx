@@ -92,7 +92,7 @@ export class MainView extends React.Component {
       this.setState({
         favorites: response.data.FavoriteMovies
       });
-      console.log(favorites + ' favorites');
+      console.log(favorites + ' favorites');////////////////////////////////////////////////////////////////////////////////////////////////////////////
     })
     .catch(error => {
       console.log(error);
@@ -175,16 +175,36 @@ export class MainView extends React.Component {
     });
   }
 
+  movieIDtoName(userData, movies) {
+    if (userData[0]){
+    let favMovies = [];
+    let i, value, movie;
+    for (i=0; i< userData[0].FavoriteMovies.length; i++) {
+      value = userData[0].FavoriteMovies[i];
+      movie = movies.find( m => m._id === value)
+      if (movie){
+      favMovies.push(movie.title)
+      }
+    }
+    return favMovies
+    }
+  }
+
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    const {movies, user, newUser, directors, favorites, userData, onClick} = this.state;
+    const {movies, user, newUser, directors, userData, onClick} = this.state;
+
+    let favMovies;
 
     if(!newUser) return <RegisterView  onRegister={newUser => this.onRegister(newUser)}/>
 
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} onRegister={newUser => this.onRegister(newUser)}/>
-    
     // Before the movies have been loaded
     if (!movies) return <div className="main-view"/>;
+
+    if (userData) {
+      favMovies = this.movieIDtoName(userData, movies);
+    }
 
     return (
       <Router>
@@ -223,7 +243,7 @@ export class MainView extends React.Component {
             <Route path="/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
-            <Route path="/profile" render={() => <ProfileView user={userData[0]} onRegister={newUser => this.onRegister(newUser)}/>}/>
+            <Route path="/profile" render={() => <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>}/>
           </div>
         </Router>
       </Router>
