@@ -1,0 +1,10 @@
+$font-text: black;
+$sub-color: lighten($font-text, 50%);
+
+.head-text {
+  font-weight: bold;
+}
+
+.sub-text {
+  color: $sub-color;
+}
