@@ -21,8 +21,7 @@ export function RegisterView(props) {
       Birthday: Birthday
     })
     .then(response => {
-      const data = response.data;
-      console.log(data);
+      console.log(response);
       window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
     })
     .catch(e => {
@@ -38,10 +37,10 @@ export function RegisterView(props) {
   }
 
   return (
-    <Form className="form">
+    <Form className="form" onSubmit={handleSubmit}>
       <Form.Group controlId="Username">
         <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" value={Username} placeholder="Enter alpha-numeric username" required onChange={e => setUsername(e.target.value)}/>
+        <Form.Control type="text" value={Username} placeholder="Enter alpha-numeric username" autoFocus={true} required onChange={e => setUsername(e.target.value)}/>
       </Form.Group>
       
       <Form.Group controlId="Password">
@@ -59,7 +58,7 @@ export function RegisterView(props) {
         <Form.Control type="date" max={Date()} value={Birthday} placeholder="Enter as YYYY-MM-DD. Optional" onChange={e => setBirthday(e.target.value)}/>
       </Form.Group>
       
-      <Button variant="primary" type="button" className="reg_button" onClick={handleSubmit}>Register Now!</Button>
+      <Button variant="primary" type="submit" className="reg_button">Register Now!</Button>
       <Button variant="secondary" type="button" className="reg_button" onClick={handleBack}>Existing user</Button>
     </Form>
   );
