@@ -30,6 +30,7 @@ export class MainView extends React.Component {
     this.state = {
       movies: [],
       directors: [],
+      favorites: [],
       selectedMovie: null,
       user: null,
       newUser: true,
@@ -58,6 +59,39 @@ export class MainView extends React.Component {
       this.setState({
         directors: response.data
       });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  getFavorites(token) {
+    axios.get(`https://rapuano-flix.herokuapp.com/users/${user}/movies`, {
+      headers: {Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        favorites: response.data
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  handleAdd(movieID) {
+    let user = localStorage.getItem('user')
+    let token = localStorage.getItem('token')
+
+    axios.post(`https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`, {
+      headers: {Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        favorites: response.data
+      });
+      console.log('Success');
+      alert('Added movie to favorites list!')
     })
     .catch(error => {
       console.log(error);
@@ -100,7 +134,7 @@ export class MainView extends React.Component {
 
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    const {movies, user, newUser, directors} = this.state;
+    const {movies, user, newUser, directors, favorites, onClick} = this.state;
 
     if(!newUser) return <RegisterView  onRegister={newUser => this.onRegister(newUser)}/>
 
@@ -130,7 +164,7 @@ export class MainView extends React.Component {
               </CardColumns>}/>
             <Route path="/movies/:movieID" render={ ({match}) =>
               <CardColumns>
-                <MovieView movie={movies.find( m => m._id === match.params.movieID)}/>
+                <MovieView movie={movies.find( m => m._id === match.params.movieID)} onClick={(movieID) => this.handleAdd(movieID)}/>
               </CardColumns>}/>
             <Route path="/directors" render={() => 
               <Row className="mx-auto">
@@ -147,9 +181,9 @@ export class MainView extends React.Component {
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
             <Route path="/profile" render={() => 
-            <CardColumns>
-              {movies.map( m => <ProfileView key={m._id} movie={m} />)}
-            </CardColumns>}/>
+              <CardColumns>
+                {favorites.map( m => <ProfileView key={m._id} movie={m}/>)}
+              </CardColumns>}/>
           </div>
         </Router>
       </Router>
@@ -165,7 +199,7 @@ MainView.propTypes = {
       description: PropTypes.string.isRequired,
       genre: PropTypes.object.isRequired,
       director: PropTypes.object.isRequired
-    }).isRequired,
+    })
   }),
   MovieCard: PropTypes.shape({
     movie: PropTypes.shape({
