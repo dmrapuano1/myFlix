@@ -14,7 +14,7 @@ export class MovieView extends React.Component {
   };
 
   render() {
-    const {movie} = this.props;
+    const {movie, onClick} = this.props;
 
     if (!movie) return null;
 
@@ -42,7 +42,7 @@ export class MovieView extends React.Component {
         <Link to={`/`}>
           <Button variant="secondary">Home</Button>
         </Link>
-        <Button variant="primary" onClick={(movie) => this.handleAdd(movie)}>Add to favorites</Button>
+        <Button variant="primary" onClick={() => onClick(movie._id)}>Add to favorites</Button>
       </div>
 
     );
@@ -56,5 +56,5 @@ MovieView.propTypes = {
     description: PropTypes.string.isRequired,
     genre: PropTypes.object.isRequired,
     director: PropTypes.object.isRequired
-  }).isRequired,
+  })
 }
