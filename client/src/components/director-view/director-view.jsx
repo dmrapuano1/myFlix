@@ -18,7 +18,7 @@ export class DirectorView extends React.Component {
       <Card bg="light" style={{ width: '16rem' }}>
         <Card.Body>
           <Card.Title className="h1">{director.director.name}</Card.Title>
-          <Link to={`/directors/${director._id}`}>
+          <Link to={`/director/${director.director.name}`}>
             <Button variant="info">Details</Button>
           </Link>
         </Card.Body>
