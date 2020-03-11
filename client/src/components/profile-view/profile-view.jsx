@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 
 import {Link} from 'react-router-dom';
@@ -8,9 +8,16 @@ import {Link} from 'react-router-dom';
 require('./profile-view.scss');
 
 export class ProfileView extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {};
+  };
 
   render() {
-    const {movie} = this.props
+    const {movie} = this.props;
+
+    if (!movie) return <NoFavorites/>
 
     return (
       <Card border="info" style={{ width: '16rem' }}>
@@ -20,6 +27,9 @@ export class ProfileView extends React.Component {
           <Card.Text>{movie.description}</Card.Text>
           <Link to={`/movies/${movie._id}`}>
             <Button variant="info">Details</Button>
+          </Link>
+          <Link to={`/movies/${movie._id}`}>
+            <Button variant="danger">Remove</Button>
           </Link>
         </Card.Body>
       </Card>
