@@ -40,8 +40,9 @@ export class MovieView extends React.Component {
           <span className="value">{movie.director.name}</span>
         </div>
         <Link to={`/`}>
-          <Button variant="primary">Back</Button>
+          <Button variant="secondary">Home</Button>
         </Link>
+        <Button variant="primary" onClick={(movie) => this.handleAdd(movie)}>Add to favorites</Button>
       </div>
 
     );
