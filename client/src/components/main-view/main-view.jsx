@@ -31,6 +31,7 @@ export class MainView extends React.Component {
       movies: [],
       directors: [],
       favorites: [],
+      userData: [],
       selectedMovie: null,
       user: null,
       newUser: true,
@@ -65,6 +66,22 @@ export class MainView extends React.Component {
     });
   }
 
+  getUser(token) {
+    let user = localStorage.getItem('user');
+    axios.get(`https://rapuano-flix.herokuapp.com/users/${user}`, {
+      headers: {Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        userData: response.data
+      });
+      console.log('Data retrieved successfully');
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   getFavorites(token) {
     let user = localStorage.getItem('user');
     axios.get(`https://rapuano-flix.herokuapp.com/users/${user}/movies`, {
@@ -93,7 +110,7 @@ export class MainView extends React.Component {
       this.setState({
         favorites: response.data
       });
-      console.log('Success');
+      console.log('Successful add');
       alert('Added movie to favorites list!');
     })
     .catch(error => {
@@ -113,11 +130,12 @@ export class MainView extends React.Component {
       this.setState({
         favorites: response.data
       });
-      console.log('Success');
+      console.log('Successful delete');
       alert('Added movie to favorites list!')
     })
     .catch(error => {
       console.log(error);
+      alert('Something went wrong. Movie not deleted.');
     });
   }
 
@@ -129,7 +147,7 @@ export class MainView extends React.Component {
       });
       this.getMovies(accessToken);
       this.getDirectors(accessToken);
-      this.getFavorites(accessToken);
+      this.getUser(accessToken);
     }
   }
 
@@ -148,7 +166,7 @@ export class MainView extends React.Component {
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
-    this.getFavorites(authData.token);
+    this.getUser(authData.token);
   }
 
   onRegister(newUser) {
@@ -159,7 +177,7 @@ export class MainView extends React.Component {
 
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    const {movies, user, newUser, directors, favorites, onClick} = this.state;
+    const {movies, user, newUser, directors, favorites, userData, onClick} = this.state;
 
     if(!newUser) return <RegisterView  onRegister={newUser => this.onRegister(newUser)}/>
 
@@ -205,10 +223,7 @@ export class MainView extends React.Component {
             <Route path="/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
-            <Route path="/profile" render={() => 
-              <CardColumns>
-                {favorites.map( m => <ProfileView key={m._id} movie={m} onClick={(movieID) => this.handleDelete(movieID)}/>)} 
-              </CardColumns>}/>
+            <Route path="/profile" render={() => <ProfileView user={userData[0]} onRegister={newUser => this.onRegister(newUser)}/>}/>
           </div>
         </Router>
       </Router>
