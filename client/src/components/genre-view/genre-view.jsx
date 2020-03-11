@@ -11,14 +11,18 @@ require('./genre-view.scss');
 export class GenreView extends React.Component {
 
   render() {
-    const {genre} = this.props;
+    const {movie} = this.props;
 
     return (
       <Col className="col-md-3 director-card">
       <Card bg="light" style={{ width: '16rem' }}>
         <Card.Body>
-          <Card.Title>{genre.genre.name}</Card.Title>
-          <Link to={`/genres/`}>
+          <Card.Title className="head-text">{movie.genre.name}</Card.Title>
+          <Card.Text className="sub-text">({movie.title})</Card.Text>
+          <Link to={`/movies/${movie._id}`}>
+            <Button variant="secondary">See Movie</Button>
+          </Link>
+          <Link to={`/genre/${movie.genre.name}`}>
             <Button variant="info">Details</Button>
           </Link>
         </Card.Body>
