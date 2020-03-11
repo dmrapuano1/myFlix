@@ -66,13 +66,16 @@ export class MainView extends React.Component {
   }
 
   getFavorites(token) {
+    let user = localStorage.getItem('user');
     axios.get(`https://rapuano-flix.herokuapp.com/users/${user}/movies`, {
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
+      console.log(response.data)
       this.setState({
-        favorites: response.data
+        favorites: response.data.FavoriteMovies
       });
+      console.log(favorites + ' favorites');
     })
     .catch(error => {
       console.log(error);
@@ -80,10 +83,30 @@ export class MainView extends React.Component {
   }
 
   handleAdd(movieID) {
+    let user = localStorage.getItem('user');
+    let token = localStorage.getItem('token');
+
+    axios.post(`https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`, {
+      headers: {Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        favorites: response.data
+      });
+      console.log('Success');
+      alert('Added movie to favorites list!');
+    })
+    .catch(error => {
+      console.log(error);
+      alert('Something went wrong. Movie not added.');
+    });
+  }
+
+  handleDelete(movieID) {
     let user = localStorage.getItem('user')
     let token = localStorage.getItem('token')
 
-    axios.post(`https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`, {
+    axios.delete(`https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`, {
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
@@ -106,6 +129,7 @@ export class MainView extends React.Component {
       });
       this.getMovies(accessToken);
       this.getDirectors(accessToken);
+      this.getFavorites(accessToken);
     }
   }
 
@@ -124,6 +148,7 @@ export class MainView extends React.Component {
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
+    this.getFavorites(authData.token);
   }
 
   onRegister(newUser) {
@@ -182,7 +207,7 @@ export class MainView extends React.Component {
             }/>
             <Route path="/profile" render={() => 
               <CardColumns>
-                {favorites.map( m => <ProfileView key={m._id} movie={m}/>)}
+                {favorites.map( m => <ProfileView key={m._id} movie={m} onClick={(movieID) => this.handleDelete(movieID)}/>)} 
               </CardColumns>}/>
           </div>
         </Router>
