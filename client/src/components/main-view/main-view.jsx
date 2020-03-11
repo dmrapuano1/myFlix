@@ -12,11 +12,13 @@ import {Link} from 'react-router-dom';
 
 import {LoginView} from '../login-view/login-view';
 import {RegisterView} from '../registration-view/registration-view';
-import {DirectorView} from '../director-view/director-view';
-import {GenreView} from '../genre-view/genre-view';
 import {MovieCard} from '../movie-card/movie-card';
 import {MovieView} from '../movie-view/movie-view';
-import {DirectorCard} from '../director-view/director-card';
+import {DirectorView} from '../director-view/director-view';
+import {DirectorCard} from '../director-card/director-card';
+import {GenreView} from '../genre-view/genre-view';
+import {GenreCard} from '../genre-card/genre-card';
+import {ProfileView} from '../profile-view/profile-view';
 
 require('./main-view.scss');
 
@@ -28,7 +30,6 @@ export class MainView extends React.Component {
     this.state = {
       movies: [],
       directors: [],
-      genres: [],
       selectedMovie: null,
       user: null,
       newUser: true,
@@ -54,23 +55,8 @@ export class MainView extends React.Component {
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      console.log(response.data);
       this.setState({
         directors: response.data
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
-
-  getGenres(token) {
-    axios.get("https://rapuano-flix.herokuapp.com/genres", {
-      headers: {Authorization: `Bearer ${token}`}
-    })
-    .then(response => {
-      this.setState({
-        genres: response.data
       });
     })
     .catch(error => {
@@ -86,7 +72,6 @@ export class MainView extends React.Component {
       });
       this.getMovies(accessToken);
       this.getDirectors(accessToken);
-      this.getGenres(accessToken);
     }
   }
 
@@ -105,7 +90,6 @@ export class MainView extends React.Component {
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
-    this.getGenres(authData.token);
   }
 
   onRegister(newUser) {
@@ -116,7 +100,7 @@ export class MainView extends React.Component {
 
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    const {movies, user, newUser, directors, genres} = this.state;
+    const {movies, user, newUser, directors} = this.state;
 
     if(!newUser) return <RegisterView  onRegister={newUser => this.onRegister(newUser)}/>
 
@@ -128,9 +112,10 @@ export class MainView extends React.Component {
     return (
       <Router>
         <Navbar sticky="top" bg="light" expand="lg" className="mb-3 shadow-sm p-3 mb-5">
-          <Navbar.Brand href="http://localhost:1234/" className="navbar-brand">myFlix</Navbar.Brand>
+    <Navbar.Brand href="http://localhost:1234/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
+            <Button href="http://localhost:1234/" variant="light mr-1" size="lg" className="home-button">Home</Button>
             <Button href="http://localhost:1234/directors" variant="light mr-1" size="lg" className="profile-button">Directors</Button>
             <Button href="http://localhost:1234/genres" variant="light mr-1" size="lg" className="profile-button">Genres</Button>
             <Button href="http://localhost:1234/profile" variant="light mr-1" size="lg" className="profile-button">Profile</Button>
@@ -151,15 +136,20 @@ export class MainView extends React.Component {
               <Row className="mx-auto">
                 {directors.map( d => <DirectorView key={d._id} director={d}/>)}
               </Row>}/>
-            <Route path="/directors/:director" render={ ({match}) =>
-              <CardColumns>
-                <DirectorCard movie={movies.find( m => m.director.name === match.params.director)}/>
-              </CardColumns>}/>
+            <Route path="/director/:director" render={ ({match}) => 
+              <DirectorCard director={movies.find( m => m.director.name === match.params.director)}/>
+            }/>
             <Route path="/genres" render={() => 
               <Row className="mx-auto">
-                { genres.map( m => <GenreView key={m._id} genre={m}/>)}
+                { movies.map( m => <GenreView key={m._id} movie={m}/>)}
               </Row>}/>
-            
+            <Route path="/genre/:genre" render={ ({match}) =>
+              <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
+            }/>
+            <Route path="/profile" render={() => 
+            <CardColumns>
+              {movies.map( m => <ProfileView key={m._id} movie={m} />)}
+            </CardColumns>}/>
           </div>
         </Router>
       </Router>
