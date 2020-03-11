@@ -36,3 +36,12 @@ export class GenreCard extends React.Component {
     );
   }
 }
+
+GenreCard.propTypes = {
+  Card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    movie: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    button: PropTypes.object.isRequired
+  })
+}

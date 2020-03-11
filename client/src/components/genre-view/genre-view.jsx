@@ -32,3 +32,11 @@ export class GenreView extends React.Component {
     );
   }
 }
+
+GenreView.propTypes = {
+  Card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    movie: PropTypes.string.isRequired,
+    button: PropTypes.object.isRequired
+  })
+}

@@ -37,3 +37,11 @@ export class DirectorCard extends React.Component {
     );
   }
 }
+
+DirectorCard.propTypes = {
+  Card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    bio: PropTypes.string.isRequired,
+    dates: PropTypes.string.isRequired
+  })
+}

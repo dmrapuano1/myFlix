@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 
 import {Link} from 'react-router-dom';
-import {NoFavorites} from './noFavorites';
 
 require('./profile-view.scss');
 
@@ -18,7 +17,7 @@ export class ProfileView extends React.Component {
   render() {
     const {movie, onClick} = this.props;
 
-    if (!movie) return <NoFavorites/>
+    if (!movie) return null
 
     return (
       <Card border="info" style={{ width: '16rem' }}>

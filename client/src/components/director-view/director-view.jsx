@@ -28,3 +28,10 @@ export class DirectorView extends React.Component {
     );
   }
 }
+
+DirectorView.propTypes = {
+  Card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    button: PropTypes.object.isRequired
+  })
+}
