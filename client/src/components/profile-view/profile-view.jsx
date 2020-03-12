@@ -90,7 +90,10 @@ export class ProfileView extends React.Component {
                 <Card.Text>{user.Birthday}</Card.Text>
                 <Card.Text className="head-text">Favorite Movies:</Card.Text>
                 <Card.Text>{favorites}</Card.Text>
-                <Button variant="danger" onClick= {() => this.handleDelete(event, user)}>Delete Account</Button>
+                <Link to={`/user/movies`}>
+                  <Button variant="info">Edit Favorites</Button>
+                </Link>
+                
               </Card.Body>
             </Card>
           </Col>
@@ -114,8 +117,8 @@ export class ProfileView extends React.Component {
               <Link to={`/`}>
                   <Button variant="secondary">Home</Button>
               </Link>
-              <Button variant="primary" type="button" className="reg_button" onClick={e => this.handleSubmit(event, user)}>Update</Button>
-
+              <Button variant="primary" type="button" onClick={e => this.handleSubmit(event, user)}>Update</Button>
+              <Button variant="danger" onClick= {() => this.handleDelete(event, user)}>Delete Account</Button>
             </Form>
           </Col>
         </Row>
