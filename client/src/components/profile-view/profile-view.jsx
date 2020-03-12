@@ -27,12 +27,16 @@ export class ProfileView extends React.Component {
   
   handleSubmit(e, user) {
     e.preventDefault();
-    axios.get('https://rapuano-flix.herokuapp.com/accounts', {
+    let token = localStorage.getItem('token');
+    console.log(Password.value);
+    axios.put(`https://rapuano-flix.herokuapp.com/users/${user.Username}`, {
+      headers: {Authorization: `Bearer ${token}`},
+      data: {
       Username: user.Username,
-      Password: Password,
-      Email: Email,
-      Birthday: Birthday
-    })
+      Password: Password.value,
+      Email: Email.value,
+      Birthday: Birthday.value
+    }})
     .then(response => {
       const data = response.data;
       console.log(data);
@@ -98,26 +102,26 @@ export class ProfileView extends React.Component {
             </Card>
           </Col>
           <Col className="col-md-6">
-            <Form className="form">          
+            <Form className="form" onSubmit={e => this.handleSubmit(event, user)}>          
               <Form.Group controlId="Password">
                 <Form.Label>Password:</Form.Label>
-                <Form.Control type="password" value={Password} placeholder="Enter desired password" onChange={e => setPassword(e.target.value)}/>
+                <Form.Control type="password" value={Password} placeholder="Enter desired password" required/>
               </Form.Group>
 
               <Form.Group controlId="Email">
                 <Form.Label>E-mail:</Form.Label>
-                <Form.Control type="email" value={Email} placeholder="Enter your e-mail" onChange={e => setEmail(e.target.value)}/>
+                <Form.Control type="email" value={Email} placeholder="Enter your e-mail" required/>
               </Form.Group>
 
               <Form.Group controlId="Birthday">
                 <Form.Label>Birthday:</Form.Label>
-                <Form.Control type="date" max={Date()} value={Birthday} placeholder="Enter as YYYY-MM-DD. Optional" onChange={e => setBirthday(e.target.value)}/>
+                <Form.Control type="date" max={Date()} value={Birthday} placeholder="Enter as YYYY-MM-DD. Optional"/>
               </Form.Group>
 
               <Link to={`/`}>
                   <Button variant="secondary">Home</Button>
               </Link>
-              <Button variant="primary" type="button" onClick={e => this.handleSubmit(event, user)}>Update</Button>
+              <Button variant="primary" type="submit">Update</Button>
               <Button variant="danger" onClick= {() => this.handleDelete(event, user)}>Delete Account</Button>
             </Form>
           </Col>
