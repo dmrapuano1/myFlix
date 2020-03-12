@@ -19,6 +19,7 @@ import {DirectorCard} from '../director-card/director-card';
 import {GenreView} from '../genre-view/genre-view';
 import {GenreCard} from '../genre-card/genre-card';
 import {ProfileView} from '../profile-view/profile-view';
+import {FavoriteMovies} from '../favorite-movies/favorite-movies';
 
 require('./main-view.scss');
 
@@ -131,7 +132,7 @@ export class MainView extends React.Component {
         favorites: response.data
       });
       console.log('Successful delete');
-      alert('Added movie to favorites list!')
+      alert('Movie removed from list.')
     })
     .catch(error => {
       console.log(error);
@@ -192,7 +193,7 @@ export class MainView extends React.Component {
 
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    const {movies, user, newUser, directors, userData, onClick} = this.state;
+    const {movies, user, newUser, directors, userData, onClick, target} = this.state;
 
     let favMovies;
 
@@ -205,6 +206,8 @@ export class MainView extends React.Component {
     if (userData) {
       favMovies = this.movieIDtoName(userData, movies);
     }
+
+    if (!favMovies) return <div className="main-view"/>;
 
     return (
       <Router>
@@ -243,7 +246,14 @@ export class MainView extends React.Component {
             <Route path="/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
-            <Route path="/profile" render={() => <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>}/>
+            <Route path="/profile" render={() => 
+              <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>
+            }/>
+            <Route path="/user/movies" render={() => 
+              <Row className="mx-auto">
+                {favMovies.map (m => <FavoriteMovies key={movies.find(target => target.title === m)} onClick={(target) => this.handleDelete(target)} movie={m} movieList={movies}/>)}
+              </Row>
+            }/>
           </div>
         </Router>
       </Router>
