@@ -1,23 +1,29 @@
+//Imports dependencies
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-
 import {Link} from 'react-router-dom';
 
+//Pulls proper styles
 require('./movie-view.scss');
 
+//Exports MovieView to MainView
 export class MovieView extends React.Component {
   constructor() {
     super();
 
+    //Sets shape of state
     this.state = {};
   };
 
   render() {
+    //Defines values pulled from MainView
     const {movie, onClick} = this.props;
 
+    //Doesn't load until future variables are defined by axios promise in MainView
     if (!movie) return null;
 
+    //Returns all details about movie
     return (
       <div className="movie-group">
         <div className="movie-picture">
@@ -39,9 +45,11 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.director.name}</span>
         </div>
+        {/* Sends user to MainView */}
         <Link to={`/`}>
           <Button variant="secondary">Home</Button>
         </Link>
+        {/* Sets current movie as user favorite */}
         <Button variant="primary" onClick={() => onClick(movie._id)}>Add to favorites</Button>
       </div>
 
@@ -49,6 +57,7 @@ export class MovieView extends React.Component {
   }
 }
 
+//propTypes to ensure proper load
 MovieView.propTypes = {
   movie: PropTypes.shape({
     imagePath: PropTypes.string.isRequired,

@@ -1,3 +1,4 @@
+//Imports dependencies
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -8,11 +9,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
+//Exports ProfileView to MainView
 export class ProfileView extends React.Component {
 
   constructor() {
     super();
 
+    //Sets state of all variables pulled from or set to database
     this.state = {
       Username: '',
       Password: '',
@@ -22,52 +25,67 @@ export class ProfileView extends React.Component {
       Birthday: '',
       setBirthday: '',
     }
-
   }
   
+  //Function to run on submit of form
   handleSubmit(e, user) {
+    //Prevents page from reloading (and other form defaults after submit)
     e.preventDefault();
+    //Pulls token from local storage
     let token = localStorage.getItem('token');
+    //Request to database to change info in database to newly input info
     axios({
       method: 'put',
       url: `https://rapuano-flix.herokuapp.com/users/${user.Username}`,
       headers: {authorization: `Bearer ${token}`},
       data: {
-      Username: user.Username,
-      Password: Password.value,
-      Email: Email.value,
-      Birthday: Birthday.value
+        //Keeping username the same without user input
+        Username: user.Username,
+        Password: Password.value,
+        Email: Email.value,
+        Birthday: Birthday.value
     }})
     .then(response => {
       const data = response.data;
       console.log(data);
-      window.open('/profile', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+      //Visual for user
+      alert('Information updated successfully');
+      //Stalls window reload enough for alert to go off first
+      setTimeout(function() {
+        window.open('/profile', '_self')
+      }, 1);
     })
+    //Catch all for errors
     .catch(e => {
-      console.log('Error updating the user');
       alert('Something went wrong. Account not updated');
     });
   };
 
+  //Handles delete function in form
   handleDelete(e, user) {
+    //Safety to ensure user wants to delete account (protects accidental deletes)
     let value = prompt('Are you sure? This can not be undone. Type \'yes\' to finalize delete');
+    //Prevents errors if cancelled without value
     if (value !== null && value !== undefined) {
+      //Sets user input to all lower case to match easier (ie yes, YES, yEs all become 'yes')
       value = value.toLowerCase();
     }
     if (value === 'yes') {
       let token = localStorage.getItem('token');
-      
+      //If user input 'yes', requests database to delete user that is logged in
       axios.delete(`https://rapuano-flix.herokuapp.com/users/${user.Username}`, {
         headers: {Authorization: `Bearer ${token}`}
       })        
       .then(response => {
         const data = response.data;
+        //Visual for user
         alert('Deleted successfully, sending to login page.')
+        //Quick logout function
         localStorage.clear();
-        window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+        //Loads MainView which due to logout will load LoginView
+        window.open('/', '_self');
       })
       .catch(e => {
-        console.log('Error deleting the user');
         alert('Something went wrong. Account not deleted');
       });
     }
@@ -75,15 +93,17 @@ export class ProfileView extends React.Component {
 
   render() {
 
+    //Defines all variables used in render plus all variables obtained from MainView
     const {user, Password, setPassword, Email, setEmail, Birthday, setBirthday, favorites, Username} = this.props
 
+    //Prevents error before axios promise returns from MainView
     if(!user) return null
-    console.log(favorites)
 
     return (
 
       <div>
         <Row>
+          {/* Current user information display */}
           <Col className="col-md-6">
             <Card border="info" style={{ width: '16rem' }}>
               <Card.Body>
@@ -96,13 +116,14 @@ export class ProfileView extends React.Component {
                 <Card.Text>{user.Birthday}</Card.Text>
                 <Card.Text className="head-text">Favorite Movies:</Card.Text>
                 <Card.Text>{favorites}</Card.Text>
+                {/* Links to display of all users movies */}
                 <Link to={`/user/movies`}>
                   <Button variant="info">Edit Favorites</Button>
                 </Link>
-                
               </Card.Body>
             </Card>
           </Col>
+          {/* Edit user form */}
           <Col className="col-md-6">
             <Form className="form" onSubmit={e => this.handleSubmit(event, user)}>          
               <Form.Group controlId="Password">
@@ -120,10 +141,13 @@ export class ProfileView extends React.Component {
                 <Form.Control type="date" max={Date()} value={Birthday} placeholder="Enter as YYYY-MM-DD. Optional"/>
               </Form.Group>
 
+              {/* Return to MainView link */}
               <Link to={`/`}>
                   <Button variant="secondary">Home</Button>
               </Link>
+              {/* Submit form button. Written so enter key will submit as well */}
               <Button variant="primary" type="submit">Update</Button>
+              {/* Button to call delete function */}
               <Button variant="danger" onClick= {() => this.handleDelete(event, user)}>Delete Account</Button>
             </Form>
           </Col>
@@ -132,11 +156,17 @@ export class ProfileView extends React.Component {
     );
   };
 }
-// RegisterView.propTypes = {
-//   form: PropTypes.shape({
-//     Username: PropTypes.string,
-//     Password: PropTypes.string,
-//     Email: PropTypes.string,
-//     Birthday: PropTypes.instanceOf(Date)
-//   })
-// }
+
+ProfileView.propTypes = {
+  card: PropTypes.shape({
+    UsernameTitle: PropTypes.string,
+    UsernameValue: PropTypes.object,
+    EmailTitle: PropTypes.string,
+    EmailValue: PropTypes.object,
+    BirthdayTitle: PropTypes.string,
+    BirthdayValue: PropTypes.object,
+    FavoritesValue: PropTypes.shape({
+      movie: propTypes.string
+    }),
+  }),
+}

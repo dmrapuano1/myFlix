@@ -1,15 +1,13 @@
+//Imports dependencies 
 import React from 'react';
 import axios from 'axios';
 import CardColumns from 'react-bootstrap/CardColumns';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import PropTypes from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import {Link} from 'react-router-dom';
-
+//Imports all views that are referenced in code
 import {LoginView} from '../login-view/login-view';
 import {RegisterView} from '../registration-view/registration-view';
 import {MovieCard} from '../movie-card/movie-card';
@@ -21,13 +19,16 @@ import {GenreCard} from '../genre-card/genre-card';
 import {ProfileView} from '../profile-view/profile-view';
 import {FavoriteMovies} from '../favorite-movies/favorite-movies';
 
+//Pulls scss
 require('./main-view.scss');
 
+//Exports MainView to all other views
 export class MainView extends React.Component {
 
   constructor() {
     super();
 
+    //sets the state of all read only variables
     this.state = {
       movies: [],
       directors: [],
@@ -39,20 +40,25 @@ export class MainView extends React.Component {
     };
   };
 
+  //Gets all movies from database
   getMovies(token) {
     axios.get("https://rapuano-flix.herokuapp.com/movies", {
+      //Sends token to authorize
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
+      //Changes state so in future can pull movies and only after they have rendered
       this.setState({
         movies: response.data
       });
     })
+    //Catch all for errors
     .catch(error => {
       console.log(error);
     });
   }
 
+  //Gets all directors from database
   getDirectors(token) {
     axios.get("https://rapuano-flix.herokuapp.com/directors", {
       headers: {Authorization: `Bearer ${token}`}
@@ -67,6 +73,7 @@ export class MainView extends React.Component {
     });
   }
 
+  //Gets active (logged in) user and their data
   getUser(token) {
     let user = localStorage.getItem('user');
     axios.get(`https://rapuano-flix.herokuapp.com/users/${user}`, {
@@ -76,13 +83,13 @@ export class MainView extends React.Component {
       this.setState({
         userData: response.data
       });
-      console.log('Data retrieved successfully');
     })
     .catch(error => {
       console.log(error);
     });
   }
 
+  //Pulls the favorite movies of logged in user
   getFavorites(token) {
     let user = localStorage.getItem('user');
     axios.get(`https://rapuano-flix.herokuapp.com/users/${user}/movies`, {
@@ -93,17 +100,19 @@ export class MainView extends React.Component {
       this.setState({
         favorites: response.data.FavoriteMovies
       });
-      console.log(favorites + ' favorites');////////////////////////////////////////////////////////////////////////////////////////////////////////////
     })
     .catch(error => {
       console.log(error);
     });
   }
 
+  //Adds selected movie to user's favorites
   handleAdd(movieID) {
+    //Defines user and token from localStorage so they don't have to be in function call
     let user = localStorage.getItem('user');
     let token = localStorage.getItem('token');
 
+    //requests POST of new movie to favorites
     axios({
       method: 'post',
       url: `https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`,
@@ -113,7 +122,7 @@ export class MainView extends React.Component {
       this.setState({
         favorites: response.data
       });
-      console.log('Successful add');
+      //Visual for user
       alert('Added movie to favorites list!');
     })
     .catch(error => {
@@ -122,6 +131,7 @@ export class MainView extends React.Component {
     });
   }
 
+  //requests delete of movie from favorites
   handleDelete(movieID) {
     let user = localStorage.getItem('user')
     let token = localStorage.getItem('token')
@@ -133,9 +143,10 @@ export class MainView extends React.Component {
       this.setState({
         favorites: response.data
       });
-      console.log('Successful delete');
       alert('Movie removed from list.')
+      //stalls refresh of window so alert will go off first
       setTimeout(() => 
+        //Re-opens window to ensure deleted movie is removed from view as well
         {window.open('/user/movies', '_self');
       }, 1);
     })
@@ -145,29 +156,38 @@ export class MainView extends React.Component {
     });
   }
 
+  //Loads page properly on page load
   componentDidMount() {
+    //Checks for token
     let accessToken = localStorage.getItem('token');
+    //If there is a token, sets token to value
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem('user')
       });
+      //then runs the proper functions to load MainView
       this.getMovies(accessToken);
       this.getDirectors(accessToken);
       this.getUser(accessToken);
     }
   }
 
+  //Logs user out
   onLogout() {
+    //Removes all local storage items
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    //Opens login view afterwords
     window.open('/', '_self');
   }
 
+  //sets values to user when logged in
   onLoggedIn(authData) {
     this.setState({
       user: authData.user.Username
     });
 
+    //Runs everything to load MainView properly
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
@@ -175,26 +195,33 @@ export class MainView extends React.Component {
     this.getUser(authData.token);
   }
 
+  //Changes view from register to login after user registers successfully
   onRegister(newUser) {
     this.setState({
       newUser
     });
   }
 
+  //Pulls movieID from user favorites and finds/assigns movie data from database
   movieIDtoName(userData, movies) {
     if (userData[0]){
     let favMovies = [];
     let i, value, movie;
+    //loops through movie IDs
     for (i=0; i< userData[0].FavoriteMovies.length; i++) {
       value = userData[0].FavoriteMovies[i];
+      //defines movie when match is found
       movie = movies.find( m => m._id === value)
+      //When match is found, pushes into favMovies array
       if (movie){
-      if(favMovies.indexOf(movie.title) === -1){
-        favMovies.push(movie.title)
-        }
+        //Skips any duplicated favorites in database
+        if(favMovies.indexOf(movie.title) === -1){
+          //Actual act of pushing non-duplicated item into array
+          favMovies.push(movie.title)
+          }
       }
     }
-
+    //Maps array into div elements to have better visual on render
     let favElement = favMovies.map( m => <div key={m}>{m}</div>)
     return favElement
     }
@@ -204,26 +231,33 @@ export class MainView extends React.Component {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
     const {movies, user, newUser, directors, userData, onClick, target} = this.state;
 
+    //Defines favMovies as editable variable
     let favMovies;
 
+    //Loads RegisterView if user clicks register button
     if(!newUser) return <RegisterView  onRegister={newUser => this.onRegister(newUser)}/>
-
+    //Loads LoginView if no local storage data
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} onRegister={newUser => this.onRegister(newUser)}/>
     // Before the movies have been loaded
     if (!movies) return <div className="main-view"/>;
-
+    //Defines favMovies after everything loads for ProfileView to render properly
     if (userData) {
       favMovies = this.movieIDtoName(userData, movies);
     }
-
+    //Ensures proper screen is loaded and no errors if favMovies is not defined
     if (!favMovies) return <div className="main-view"/>;
 
     return (
+      //Allows for URL routing and persistent views
       <Router>
+        {/* Navbar view */}
         <Navbar sticky="top" bg="light" expand="lg" className="mb-3 shadow-sm p-3 mb-5">
-    <Navbar.Brand href="http://localhost:1234/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
+          {/* Gives a button to click no matter the size outside of sandwich menu */}
+          <Navbar.Brand href="http://localhost:1234/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          {/* Start of sandwich menu */}
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
+            {/* Navigation for all major sections of app */}
             <Button href="http://localhost:1234/" variant="light mr-1" size="lg" className="home-button">Home</Button>
             <Button href="http://localhost:1234/directors" variant="light mr-1" size="lg" className="profile-button">Directors</Button>
             <Button href="http://localhost:1234/genres" variant="light mr-1" size="lg" className="profile-button">Genres</Button>
@@ -231,33 +265,47 @@ export class MainView extends React.Component {
           <Button variant="primary ml-1" size="lg" className="logout-button" onClick={() => this.onLogout()}>Log out</Button>
           </Navbar.Collapse>
         </Navbar>
+        {/* Route to MainView */}
         <Router>
           <div className="main-view">
             <Route exact path="/" render={() => 
+              // Makes three columns for cards
               <CardColumns className="main-view-cards">
+                {/* Takes each movies and puts them in a new card as defined in MovieCard */}
                 { movies.map( m => <MovieCard key={m._id} movie={m}/>)}
               </CardColumns>}/>
+              {/* Route to target movie */}
             <Route path="/movies/:movieID" render={ ({match}) =>
               <CardColumns>
+                {/* Finds targeted movie in movies array and sends info to MovieView */}
                 <MovieView movie={movies.find( m => m._id === match.params.movieID)} onClick={(movieID) => this.handleAdd(movieID)}/>
-              </CardColumns>}/>
+              </CardColumns>
+            }/>
+            {/* Route to show all directors */}
             <Route path="/directors" render={() => 
+              // mx-auto centers Rows (CardColumns for bootstrap Row/Col)
               <Row className="mx-auto">
+                {/* Maps directors like movies above */}
                 {directors.map( d => <DirectorView key={d._id} director={d}/>)}
               </Row>}/>
+            {/* Route to show specific director */}
             <Route path="/director/:director" render={ ({match}) => 
               <DirectorCard director={movies.find( m => m.director.name === match.params.director)}/>
             }/>
+            {/* Route to show all genres */}
             <Route path="/genres" render={() => 
               <Row className="mx-auto">
                 { movies.map( m => <GenreView key={m._id} movie={m}/>)}
               </Row>}/>
+            {/* Route to show specific genre */}
             <Route path="/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
+            {/* Route to show users profile */}
             <Route path="/profile" render={() => 
               <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>
             }/>
+            {/* Route to show users favorite movies */}
             <Route path="/user/movies" render={() => 
               <Row className="mx-auto">
                 {favMovies.map (m => <FavoriteMovies key={m} onClick={(target) => this.handleDelete(target)} movie={m} movieList={movies}/>)}
@@ -270,6 +318,7 @@ export class MainView extends React.Component {
   }
 }
 
+//propTypes to ensure main features render correctly
 MainView.propTypes = {
   MovieView: PropTypes.shape({
     movie: PropTypes.shape({
