@@ -104,8 +104,10 @@ export class MainView extends React.Component {
     let user = localStorage.getItem('user');
     let token = localStorage.getItem('token');
 
-    axios.post(`https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`, {
-      headers: {Authorization: `Bearer ${token}`}
+    axios({
+      method: 'post',
+      url: `https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`,
+      headers: {authorization: `Bearer ${token}`}
     })
     .then(response => {
       this.setState({
@@ -125,7 +127,7 @@ export class MainView extends React.Component {
     let token = localStorage.getItem('token')
 
     axios.delete(`https://rapuano-flix.herokuapp.com/users/${user}/movies/${movieID}`, {
-      headers: {Authorization: `Bearer ${token}`}
+      headers: {authorization: `Bearer ${token}`}
     })
     .then(response => {
       this.setState({
@@ -133,6 +135,9 @@ export class MainView extends React.Component {
       });
       console.log('Successful delete');
       alert('Movie removed from list.')
+      setTimeout(() => 
+        {window.open('/user/movies', '_self');
+      }, 1);
     })
     .catch(error => {
       console.log(error);
@@ -184,10 +189,14 @@ export class MainView extends React.Component {
       value = userData[0].FavoriteMovies[i];
       movie = movies.find( m => m._id === value)
       if (movie){
-      favMovies.push(movie.title)
+      if(favMovies.indexOf(movie.title) === -1){
+        favMovies.push(movie.title)
+        }
       }
     }
-    return favMovies
+
+    let favElement = favMovies.map( m => <div key={m}>{m}</div>)
+    return favElement
     }
   }
 
@@ -251,7 +260,7 @@ export class MainView extends React.Component {
             }/>
             <Route path="/user/movies" render={() => 
               <Row className="mx-auto">
-                {favMovies.map (m => <FavoriteMovies key={movies.find(target => target.title === m)} onClick={(target) => this.handleDelete(target)} movie={m} movieList={movies}/>)}
+                {favMovies.map (m => <FavoriteMovies key={m} onClick={(target) => this.handleDelete(target)} movie={m} movieList={movies}/>)}
               </Row>
             }/>
           </div>
