@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+// import { createStore } from 'redux';
+// import { Provider } from 'react-redux';
 
 import {MainView} from './components/main-view/main-view';
 import moviesApp from './reducers/reducers';
@@ -9,15 +9,15 @@ import moviesApp from './reducers/reducers';
 //Bringing in the scss file for this page
 import './styles.scss';
 
-const store = createStore(moviesApp);
+// const store = createStore(moviesApp);
 
 // Main component (will eventually use all the others)
 class MyFlixApplication extends React.Component {
   render() {
     return (
-      <Provider store={store}>
+      // <Provider store={store}>
         <MainView/>
-      </Provider>
+      // </Provider>
     )
   }
 }
