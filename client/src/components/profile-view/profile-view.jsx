@@ -166,7 +166,7 @@ ProfileView.propTypes = {
     BirthdayTitle: PropTypes.string,
     BirthdayValue: PropTypes.object,
     FavoritesValue: PropTypes.shape({
-      movie: propTypes.string
+      movie: PropTypes.string
     }),
   }),
 }
