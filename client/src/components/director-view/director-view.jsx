@@ -1,18 +1,21 @@
+//Imports dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-
 import {Link} from 'react-router-dom';
-
+//Imports scss
 require('./director-view.scss');
 
+//creates DirectorView and exports to MainView
 export class DirectorView extends React.Component {
 
   render() {
+    //Pulls director from MainView
     const {director} = this.props;
 
+    //returns view
     return (
       <Col className="col-md-3 director-card">
       <Card bg="light" style={{ width: '16rem' }}>
@@ -29,6 +32,7 @@ export class DirectorView extends React.Component {
   }
 }
 
+//propTypes to ensure proper view is returned 
 DirectorView.propTypes = {
   Card: PropTypes.shape({
     title: PropTypes.string.isRequired,

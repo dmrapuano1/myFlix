@@ -1,16 +1,21 @@
+//Import dependencies
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
+//Imports scss
 require('./login-view.scss');
 
+//Exports LoginView to MainView -exporting as function-
 export function LoginView(props) {
+  //Defines variables and setX functions
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
 
+  //Function to run on submit
   const handleSubmit = (e) => {
+    //Prevents page from refreshing (along with other default behaviors of forms)
     e.preventDefault();
     //Sends request to server
     axios.post('http://rapuano-flix.herokuapp.com/login', {
@@ -19,6 +24,7 @@ export function LoginView(props) {
     })
     .then(response => {
       const data = response.data
+      //Runs onLoggedIn (in MainView) -renders page functionality
       props.onLoggedIn(data);
     })
     .catch(error => {
