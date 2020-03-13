@@ -28,9 +28,10 @@ export class ProfileView extends React.Component {
   handleSubmit(e, user) {
     e.preventDefault();
     let token = localStorage.getItem('token');
-    console.log(Password.value);
-    axios.put(`https://rapuano-flix.herokuapp.com/users/${user.Username}`, {
-      headers: {Authorization: `Bearer ${token}`},
+    axios({
+      method: 'put',
+      url: `https://rapuano-flix.herokuapp.com/users/${user.Username}`,
+      headers: {authorization: `Bearer ${token}`},
       data: {
       Username: user.Username,
       Password: Password.value,
@@ -40,7 +41,7 @@ export class ProfileView extends React.Component {
     .then(response => {
       const data = response.data;
       console.log(data);
-      window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open('/profile', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
     })
     .catch(e => {
       console.log('Error updating the user');
@@ -77,6 +78,7 @@ export class ProfileView extends React.Component {
     const {user, Password, setPassword, Email, setEmail, Birthday, setBirthday, favorites, Username} = this.props
 
     if(!user) return null
+    console.log(favorites)
 
     return (
 
