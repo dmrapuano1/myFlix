@@ -16,7 +16,10 @@ import {GenreCard} from '../genre-card/genre-card';
 import {ProfileView} from '../profile-view/profile-view';
 import {FavoriteMovies} from '../favorite-movies/favorite-movies';
 //Imports React-redux code from index.jsx
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import {setMovies} from '../../actions/actions';
+import MovieList from '../movies-list/movies-list';
+
 
 //Pulls scss
 require('./main-view.scss');
@@ -29,10 +32,10 @@ export class MainView extends React.Component {
 
     //sets the state of all read only variables
     this.state = {
-      movies: [],
-      directors: [],
-      favorites: [],
-      userData: [],
+      // movies: [],
+      // directors: [],
+      // favorites: [],
+      // userData: [],
       selectedMovie: null,
       user: null,
       newUser: true,
@@ -47,9 +50,7 @@ export class MainView extends React.Component {
     })
     .then(response => {
       //Changes state so in future can pull movies and only after they have rendered
-      this.setState({
-        movies: response.data
-      });
+      this.props.setMovies(response.data);
     })
     //Catch all for errors
     .catch(error => {
@@ -228,8 +229,9 @@ export class MainView extends React.Component {
 
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    const {movies, user, newUser, directors, userData, onClick, target} = this.state;
-
+    let {user, newUser, directors, userData, onClick, target} = this.state;
+    let {movies} = this.props;
+    console.log(movies)
     //Defines favMovies as editable variable
     let favMovies;
 
@@ -319,6 +321,12 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return {movies: state.movies}
+}
+
+export default connect(mapStateToProps, {setMovies})(MainView);
 
 //propTypes to ensure main features render correctly
 MainView.propTypes = {
