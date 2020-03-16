@@ -17,7 +17,7 @@ import {ProfileView} from '../profile-view/profile-view';
 import {FavoriteMovies} from '../favorite-movies/favorite-movies';
 //Imports React-redux code from index.jsx
 import {connect} from 'react-redux';
-import {setMovies} from '../../actions/actions';
+import {setMovies, setDirectors, setUserData, setFavorites} from '../../actions/actions';
 import MovieList from '../movies-list/movies-list';
 
 
@@ -36,7 +36,6 @@ export class MainView extends React.Component {
       // directors: [],
       // favorites: [],
       // userData: [],
-      selectedMovie: null,
       user: null,
       newUser: true,
     };
@@ -64,9 +63,7 @@ export class MainView extends React.Component {
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      this.setState({
-        directors: response.data
-      });
+      this.props.setDirectors(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -80,9 +77,7 @@ export class MainView extends React.Component {
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      this.setState({
-        userData: response.data
-      });
+      this.props.setUserData(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -96,10 +91,7 @@ export class MainView extends React.Component {
       headers: {Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      console.log(response.data)
-      this.setState({
-        favorites: response.data.FavoriteMovies
-      });
+      this.props.setFavorites(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -229,9 +221,8 @@ export class MainView extends React.Component {
 
   render() {
     // If the state isn't initialized, this will throw on runtime before the data is initially loaded
-    let {user, newUser, directors, userData, onClick, target} = this.state;
-    let {movies} = this.props;
-    console.log(movies)
+    let {user, newUser, onClick, target} = this.state;
+    let {movies, userData, directors} = this.props;
     //Defines favMovies as editable variable
     let favMovies;
 
@@ -271,11 +262,7 @@ export class MainView extends React.Component {
           <div className="main-view">
             <Switch>
             <Route exact path="/" render={() => 
-              // Makes three columns for cards
-              <CardColumns className="main-view-cards">
-                {/* Takes each movies and puts them in a new card as defined in MovieCard */}
-                { movies.map( m => <MovieCard key={m._id} movie={m}/>)}
-              </CardColumns>}/>
+              <MovieList movies={movies}/>}/>
               {/* Route to target movie */}
             <Route path="/movies/:movieID" render={ ({match}) =>
               <CardColumns>
@@ -323,10 +310,15 @@ export class MainView extends React.Component {
 }
 
 let mapStateToProps = state => {
-  return {movies: state.movies}
+  return {
+    movies: state.movies,
+    directors: state.directors,
+    userData: state.userData,
+    favorites: state.favorites
+  }
 }
 
-export default connect(mapStateToProps, {setMovies})(MainView);
+export default connect(mapStateToProps, {setMovies, setDirectors, setUserData, setFavorites})(MainView);
 
 //propTypes to ensure main features render correctly
 MainView.propTypes = {
