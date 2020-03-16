@@ -32,7 +32,7 @@ export function RegisterView(props) {
       console.log(response);
       alert('User registered. Please log in.')
       //Opens MainView to load LoginView
-      window.open('/', '_self');
+      window.open('/client', '_self');
     })
     //Catch all for errors
     .catch(e => {

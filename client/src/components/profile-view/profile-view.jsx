@@ -38,7 +38,7 @@ export class ProfileView extends React.Component {
       alert('Information updated successfully');
       //Stalls window reload enough for alert to go off first
       setTimeout(function() {
-        window.open('/profile', '_self')
+        window.open('/client/profile', '_self')
       }, 1);
     })
     //Catch all for errors
@@ -69,7 +69,7 @@ export class ProfileView extends React.Component {
         //Quick logout function
         localStorage.clear();
         //Loads MainView which due to logout will load LoginView
-        window.open('/', '_self');
+        window.open('/client', '_self');
       })
       .catch(e => {
         alert('Something went wrong. Account not deleted');
