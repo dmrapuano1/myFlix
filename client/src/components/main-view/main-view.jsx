@@ -1,12 +1,9 @@
 //Imports dependencies 
 import React from 'react';
 import axios from 'axios';
-import CardColumns from 'react-bootstrap/CardColumns';
-import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import {Navbar, Button, Row, CardColumns} from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 //Imports all views that are referenced in code
 import {LoginView} from '../login-view/login-view';
 import {RegisterView} from '../registration-view/registration-view';
@@ -18,6 +15,8 @@ import {GenreView} from '../genre-view/genre-view';
 import {GenreCard} from '../genre-card/genre-card';
 import {ProfileView} from '../profile-view/profile-view';
 import {FavoriteMovies} from '../favorite-movies/favorite-movies';
+//Imports React-redux code from index.jsx
+import { connect } from 'react-redux';
 
 //Pulls scss
 require('./main-view.scss');
@@ -268,6 +267,7 @@ export class MainView extends React.Component {
         {/* Route to MainView */}
         <Router>
           <div className="main-view">
+            <Switch>
             <Route exact path="/" render={() => 
               // Makes three columns for cards
               <CardColumns className="main-view-cards">
@@ -311,6 +311,8 @@ export class MainView extends React.Component {
                 {favMovies.map (m => <FavoriteMovies key={m} onClick={(target) => this.handleDelete(target)} movie={m} movieList={movies}/>)}
               </Row>
             }/>
+            <Route render={()=> <div className="fourZeroFour">404 Error: Page not found</div>}/>
+            </Switch>
           </div>
         </Router>
       </Router>
