@@ -12,6 +12,11 @@ export class ProfileView extends React.Component {
   handleSubmit(e, user) {
     //Prevents page from reloading (and other form defaults after submit)
     e.preventDefault();
+    //Checks password and confirmPassword are the same
+    if (Password.value !== ConfirmPassword.value) {
+      alert ('Passwords do not match.')
+      return false
+    }
     //Pulls token from local storage
     let token = localStorage.getItem('token');
     //Request to database to change info in database to newly input info
@@ -75,7 +80,7 @@ export class ProfileView extends React.Component {
   render() {
 
     //Defines all variables used in render plus all variables obtained from MainView
-    const {user, Password, setPassword, Email, setEmail, Birthday, setBirthday, favorites, Username} = this.props
+    const {user, Password, Email, Birthday, favorites, ConfirmPassword} = this.props
 
     //Prevents error before axios promise returns from MainView
     if(!user) return null
@@ -110,6 +115,11 @@ export class ProfileView extends React.Component {
               <Form.Group controlId="Password">
                 <Form.Label>Password:</Form.Label>
                 <Form.Control type="password" value={Password} placeholder="Enter desired password" required/>
+              </Form.Group>
+
+              <Form.Group controlId="ConfirmPassword">
+                <Form.Label>Confirm Password:</Form.Label>
+                <Form.Control type="password" value={ConfirmPassword} placeholder="Re-enter your desired password" required/>
               </Form.Group>
 
               <Form.Group controlId="Email">
