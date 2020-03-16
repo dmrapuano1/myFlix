@@ -1,3 +1,4 @@
+//Exports all actions
 export const SET_MOVIES = 'SET_MOVIES';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_DIRECTORS = 'SET_DIRECTORS';
@@ -6,6 +7,7 @@ export const SET_FAVORITES = 'SET_FAVORITES';
 
 
 export function setMovies(value) {
+  //returns type for reducer to user and value for app to use
   return {type: SET_MOVIES, value};
 }
 

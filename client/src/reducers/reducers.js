@@ -1,12 +1,17 @@
+//Imports dependencies
 import { combineReducers } from 'redux';
-
+//Imports required actions
 import { SET_FILTER, SET_MOVIES, SET_DIRECTORS, SET_USER_DATA, SET_FAVORITES } from '../actions/actions';
 
+//Function called in main-view
 function visibilityFilter(state = '', action) {
+  //Switch where if action is true, switch is true
   switch (action.type) {
     case SET_FILTER:
+      //When function is ran, returns just the value (removes the SET_FILTER portion)
       return action.value;
     default:
+      //If the type is incorrect, returns value as entered
       return state;
   }
 }
