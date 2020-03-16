@@ -1,7 +1,6 @@
 //Imports dependencies
 import React, {useState} from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
@@ -31,12 +30,14 @@ export function RegisterView(props) {
     //If successful, sends data to console
     .then(response => {
       console.log(response);
+      alert('User registered. Please log in.')
       //Opens MainView to load LoginView
       window.open('/', '_self');
     })
     //Catch all for errors
     .catch(e => {
       console.log('error registering the user')
+      alert('User not registered. Please check the form and try again.')
     });
     props.onRegister(Username);
   };

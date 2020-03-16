@@ -1,20 +1,13 @@
 //Imports dependencies
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col'
+import {Button, Card, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 //Imports scss
 require('./genre-card.scss');
 
 //Exports GenreCard to MainView
 export class GenreCard extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {};
-  };
 
   render() {
     //Pulls movie from MainView

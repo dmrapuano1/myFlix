@@ -1,31 +1,12 @@
 //Imports dependencies
-import React, {useState} from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import React from 'react'
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import {Form, Button, Row, Col, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 
 //Exports ProfileView to MainView
 export class ProfileView extends React.Component {
-
-  constructor() {
-    super();
-
-    //Sets state of all variables pulled from or set to database
-    this.state = {
-      Username: '',
-      Password: '',
-      setPassword: '',
-      Email: '',
-      setEmail: '',
-      Birthday: '',
-      setBirthday: '',
-    }
-  }
   
   //Function to run on submit of form
   handleSubmit(e, user) {

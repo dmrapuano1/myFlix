@@ -1,7 +1,6 @@
 //Import dependencies
 import React, {useState} from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 //Imports scss
@@ -29,6 +28,7 @@ export function LoginView(props) {
     })
     .catch(error => {
       console.log('No user found');
+      alert('Incorrect username and/or password')
     });
   };
 

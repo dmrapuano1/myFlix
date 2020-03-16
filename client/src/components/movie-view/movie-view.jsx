@@ -9,12 +9,6 @@ require('./movie-view.scss');
 
 //Exports MovieView to MainView
 export class MovieView extends React.Component {
-  constructor() {
-    super();
-
-    //Sets shape of state
-    this.state = {};
-  };
 
   render() {
     //Defines values pulled from MainView

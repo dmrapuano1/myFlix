@@ -1,21 +1,14 @@
 //importing dependencies
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col'
+import {Button, Card, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 //Obtaining scss for file
 require('./director-card.scss');
 
 //Creates DirectorCard and exports for use in main-view
 export class DirectorCard extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {};
-  };
-
+  
   render() {
 
     //Pulls director from main-view

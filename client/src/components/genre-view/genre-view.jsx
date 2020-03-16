@@ -1,9 +1,7 @@
 //Imports dependencies
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
+import {Button, Card, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 //Imports scss
 require('./genre-view.scss');
