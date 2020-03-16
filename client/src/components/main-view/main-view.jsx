@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {Navbar, Button, Row, CardColumns} from 'react-bootstrap';
+import {Navbar, Button, Row, Card, CardColumns} from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 //Imports all views that are referenced in code
 import {LoginView} from '../login-view/login-view';
@@ -221,7 +221,7 @@ export class MainView extends React.Component {
       }
     }
     //Maps array into div elements to have better visual on render
-    let favElement = favMovies.map( m => <div key={m}>{m}</div>)
+    let favElement = favMovies.map( m => <Card.Text key={m}>{m}</Card.Text>)
     return favElement
     }
   }
@@ -308,7 +308,7 @@ export class MainView extends React.Component {
             {/* Route to show users favorite movies */}
             <Route path="/user/movies" render={() => 
               <Row className="mx-auto">
-                {favMovies.map (m => <FavoriteMovies key={m} onClick={(target) => this.handleDelete(target)} movie={m} movieList={movies}/>)}
+                {favMovies.map (m => <FavoriteMovies key={m.key} onClick={(target) => this.handleDelete(target)} movie={m.key} movieList={movies}/>)}
               </Row>
             }/>
             <Route render={()=> <div className="fourZeroFour">404 Error: Page not found</div>}/>

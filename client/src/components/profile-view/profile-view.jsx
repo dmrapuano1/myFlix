@@ -96,7 +96,7 @@ export class ProfileView extends React.Component {
                 <Card.Text className="head-text">Birthday:</Card.Text>
                 <Card.Text>{user.Birthday}</Card.Text>
                 <Card.Text className="head-text">Favorite Movies:</Card.Text>
-                <Card.Text>{favorites}</Card.Text>
+                {favorites}
                 {/* Links to display of all users movies */}
                 <Link to={`/user/movies`}>
                   <Button variant="info">Edit Favorites</Button>

@@ -12,7 +12,7 @@ export class FavoriteMovies extends React.Component {
     //Defines variables for view
     const {movie, movieList, onClick} = this.props;
     //Defines movie ID for delete function
-    let targetMovie = movieList.find(target => target.title === movie.key)
+    let targetMovie = movieList.find(target => target.title === movie)
 
     //Returns view
     return (
