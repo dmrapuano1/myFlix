@@ -6,6 +6,7 @@ uuid = require('uuid'),
 mongoose = require('mongoose'),
 Models = require('./models.js'),
 passport = require('passport'),
+path = require('path'),
 cors = require('cors');
 
 // Sets use of express framework
@@ -47,6 +48,13 @@ app.use(function (err, req, res, next) {
 
 // 'webpage/' functionality
 app.use(express.static('welcome'));
+
+//client-side routing
+app.use(express.static(path.join(__dirname, "client", "dist")));
+//Returns client side when URL includes '/client'
+app.get("/client/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+  });
 
 //Returns a list of all movies to the user
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
