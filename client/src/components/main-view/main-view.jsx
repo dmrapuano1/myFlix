@@ -261,41 +261,41 @@ export class MainView extends React.Component {
         <Router basename="/client">
           <div className="main-view">
             <Switch>
-            <Route exact path="/client" render={() => 
+            <Route exact path="/" render={() => 
               <MovieList movies={movies}/>}/>
               {/* Route to target movie */}
-            <Route path="/client/movies/:movieID" render={ ({match}) =>
+            <Route path="/movies/:movieID" render={ ({match}) =>
               <CardColumns>
                 {/* Finds targeted movie in movies array and sends info to MovieView */}
                 <MovieView movie={movies.find( m => m._id === match.params.movieID)} onClick={(movieID) => this.handleAdd(movieID)}/>
               </CardColumns>
             }/>
             {/* Route to show all directors */}
-            <Route path="/client/directors" render={() => 
+            <Route path="/directors" render={() => 
               // mx-auto centers Rows (CardColumns for bootstrap Row/Col)
               <Row className="mx-auto">
                 {/* Maps directors like movies above */}
                 {directors.map( d => <DirectorView key={d._id} director={d}/>)}
               </Row>}/>
             {/* Route to show specific director */}
-            <Route path="/client/director/:director" render={ ({match}) => 
+            <Route path="/director/:director" render={ ({match}) => 
               <DirectorCard director={movies.find( m => m.director.name === match.params.director)}/>
             }/>
             {/* Route to show all genres */}
-            <Route path="/client/genres" render={() => 
+            <Route path="/genres" render={() => 
               <Row className="mx-auto">
                 { movies.map( m => <GenreView key={m._id} movie={m}/>)}
               </Row>}/>
             {/* Route to show specific genre */}
-            <Route path="/client/genre/:genre" render={ ({match}) =>
+            <Route path="/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
             {/* Route to show users profile */}
-            <Route path="/client/profile" render={() => 
+            <Route path="/profile" render={() => 
               <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>
             }/>
             {/* Route to show users favorite movies */}
-            <Route path="/client/user/movies" render={() => 
+            <Route path="/user/movies" render={() => 
               <Row className="mx-auto">
                 {favMovies.map (m => <FavoriteMovies key={m.key} onClick={(target) => this.handleDelete(target)} movie={m.key} movieList={movies}/>)}
               </Row>
