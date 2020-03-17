@@ -245,57 +245,57 @@ export class MainView extends React.Component {
         {/* Navbar view */}
         <Navbar sticky="top" bg="light" expand="lg" className="mb-3 shadow-sm p-3 mb-5">
           {/* Gives a button to click no matter the size outside of sandwich menu */}
-          <Navbar.Brand href="http://localhost:1234/client/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
+          <Navbar.Brand href="http://localhost:1234/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           {/* Start of sandwich menu */}
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
             {/* Navigation for all major sections of app */}
-            <Button href="http://localhost:1234/client" variant="light mr-1" size="lg" className="home-button">Home</Button>
-            <Button href="http://localhost:1234/client/directors" variant="light mr-1" size="lg" className="profile-button">Directors</Button>
-            <Button href="http://localhost:1234/client/genres" variant="light mr-1" size="lg" className="profile-button">Genres</Button>
-            <Button href="http://localhost:1234/client/profile" variant="light mr-1" size="lg" className="profile-button">Profile</Button>
+            <Button href="http://localhost:1234/" variant="light mr-1" size="lg" className="home-button">Home</Button>
+            <Button href="http://localhost:1234/directors" variant="light mr-1" size="lg" className="profile-button">Directors</Button>
+            <Button href="http://localhost:1234/genres" variant="light mr-1" size="lg" className="profile-button">Genres</Button>
+            <Button href="http://localhost:1234/profile" variant="light mr-1" size="lg" className="profile-button">Profile</Button>
           <Button variant="primary ml-1" size="lg" className="logout-button" onClick={() => this.onLogout()}>Log out</Button>
           </Navbar.Collapse>
         </Navbar>
         {/* Route to MainView */}
-        <Router>
+        <Router basename="/client">
           <div className="main-view">
             <Switch>
-            <Route exact path="/client" render={() => 
+            <Route exact path="/" render={() => 
               <MovieList movies={movies}/>}/>
               {/* Route to target movie */}
-            <Route path="/client/movies/:movieID" render={ ({match}) =>
+            <Route path="/movies/:movieID" render={ ({match}) =>
               <CardColumns>
                 {/* Finds targeted movie in movies array and sends info to MovieView */}
                 <MovieView movie={movies.find( m => m._id === match.params.movieID)} onClick={(movieID) => this.handleAdd(movieID)}/>
               </CardColumns>
             }/>
             {/* Route to show all directors */}
-            <Route path="/client/directors" render={() => 
+            <Route path="/directors" render={() => 
               // mx-auto centers Rows (CardColumns for bootstrap Row/Col)
               <Row className="mx-auto">
                 {/* Maps directors like movies above */}
                 {directors.map( d => <DirectorView key={d._id} director={d}/>)}
               </Row>}/>
             {/* Route to show specific director */}
-            <Route path="/client/director/:director" render={ ({match}) => 
+            <Route path="/director/:director" render={ ({match}) => 
               <DirectorCard director={movies.find( m => m.director.name === match.params.director)}/>
             }/>
             {/* Route to show all genres */}
-            <Route path="/client/genres" render={() => 
+            <Route path="/genres" render={() => 
               <Row className="mx-auto">
                 { movies.map( m => <GenreView key={m._id} movie={m}/>)}
               </Row>}/>
             {/* Route to show specific genre */}
-            <Route path="/client/genre/:genre" render={ ({match}) =>
+            <Route path="/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
             {/* Route to show users profile */}
-            <Route path="/client/profile" render={() => 
+            <Route path="/profile" render={() => 
               <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>
             }/>
             {/* Route to show users favorite movies */}
-            <Route path="/client/user/movies" render={() => 
+            <Route path="/user/movies" render={() => 
               <Row className="mx-auto">
                 {favMovies.map (m => <FavoriteMovies key={m.key} onClick={(target) => this.handleDelete(target)} movie={m.key} movieList={movies}/>)}
               </Row>

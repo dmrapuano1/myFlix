@@ -52304,7 +52304,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           expand: "lg",
           className: "mb-3 shadow-sm p-3 mb-5"
         }, _react.default.createElement(_reactBootstrap.Navbar.Brand, {
-          href: "http://localhost:1234/client/profile",
+          href: "http://localhost:1234/profile",
           className: "navbar-brand"
         }, user, "'s flix!"), _react.default.createElement(_reactBootstrap.Navbar.Toggle, {
           "aria-controls": "basic-navbar-nav"
@@ -52312,22 +52312,22 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           className: "justify-content-end",
           id: "basic-navbar-nav"
         }, _react.default.createElement(_reactBootstrap.Button, {
-          href: "http://localhost:1234/client",
+          href: "http://localhost:1234/",
           variant: "light mr-1",
           size: "lg",
           className: "home-button"
         }, "Home"), _react.default.createElement(_reactBootstrap.Button, {
-          href: "http://localhost:1234/client/directors",
+          href: "http://localhost:1234/directors",
           variant: "light mr-1",
           size: "lg",
           className: "profile-button"
         }, "Directors"), _react.default.createElement(_reactBootstrap.Button, {
-          href: "http://localhost:1234/client/genres",
+          href: "http://localhost:1234/genres",
           variant: "light mr-1",
           size: "lg",
           className: "profile-button"
         }, "Genres"), _react.default.createElement(_reactBootstrap.Button, {
-          href: "http://localhost:1234/client/profile",
+          href: "http://localhost:1234/profile",
           variant: "light mr-1",
           size: "lg",
           className: "profile-button"
@@ -52338,18 +52338,20 @@ var MainView = /*#__PURE__*/function (_React$Component) {
           onClick: function onClick() {
             return _this8.onLogout();
           }
-        }, "Log out"))), _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+        }, "Log out"))), _react.default.createElement(_reactRouterDom.BrowserRouter, {
+          basename: "/client"
+        }, _react.default.createElement("div", {
           className: "main-view"
         }, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
           exact: true,
-          path: "/client",
+          path: "/",
           render: function render() {
             return _react.default.createElement(_moviesList.default, {
               movies: movies
             });
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/movies/:movieID",
+          path: "/movies/:movieID",
           render: function render(_ref) {
             var match = _ref.match;
             return _react.default.createElement(_reactBootstrap.CardColumns, null, _react.default.createElement(_movieView.MovieView, {
@@ -52362,7 +52364,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             }));
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/directors",
+          path: "/directors",
           render: function render() {
             return (// mx-auto centers Rows (CardColumns for bootstrap Row/Col)
               _react.default.createElement(_reactBootstrap.Row, {
@@ -52376,7 +52378,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             );
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/director/:director",
+          path: "/director/:director",
           render: function render(_ref2) {
             var match = _ref2.match;
             return _react.default.createElement(_directorCard.DirectorCard, {
@@ -52386,7 +52388,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             });
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/genres",
+          path: "/genres",
           render: function render() {
             return _react.default.createElement(_reactBootstrap.Row, {
               className: "mx-auto"
@@ -52398,7 +52400,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             }));
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/genre/:genre",
+          path: "/genre/:genre",
           render: function render(_ref3) {
             var match = _ref3.match;
             return _react.default.createElement(_genreCard.GenreCard, {
@@ -52408,7 +52410,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             });
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/profile",
+          path: "/profile",
           render: function render() {
             return _react.default.createElement(_profileView.ProfileView, {
               user: userData[0],
@@ -52419,7 +52421,7 @@ var MainView = /*#__PURE__*/function (_React$Component) {
             });
           }
         }), _react.default.createElement(_reactRouterDom.Route, {
-          path: "/client/user/movies",
+          path: "/user/movies",
           render: function render() {
             return _react.default.createElement(_reactBootstrap.Row, {
               className: "mx-auto"
@@ -52678,7 +52680,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57552" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58434" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
