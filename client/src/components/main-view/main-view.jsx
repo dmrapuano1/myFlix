@@ -260,7 +260,6 @@ export class MainView extends React.Component {
         {/* Route to MainView */}
         <Router basename="/client">
           <div className="main-view">
-            <Switch>
             <Route exact path="/" render={() => 
               <MovieList movies={movies}/>}/>
               {/* Route to target movie */}
@@ -300,8 +299,6 @@ export class MainView extends React.Component {
                 {favMovies.map (m => <FavoriteMovies key={m.key} onClick={(target) => this.handleDelete(target)} movie={m.key} movieList={movies}/>)}
               </Row>
             }/>
-            <Route render={()=> <div className="fourZeroFour">404 Error: Page not found</div>}/>
-            </Switch>
           </div>
         </Router>
       </div>
