@@ -17,7 +17,7 @@ export function LoginView(props) {
     //Prevents page from refreshing (along with other default behaviors of forms)
     e.preventDefault();
     //Sends request to server
-    axios.post('http://rapuano-flix.herokuapp.com/login', {
+    axios.post('https://rapuano-flix.herokuapp.com/login', {
       Username: Username,
       Password: Password
     })
