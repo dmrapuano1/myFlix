@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Button, Card, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 //Imports scss
-require('./genre-view.scss');
+// require('./genre-view.scss');
 
 //Exports GenreView to MainView
 export class GenreView extends React.Component {

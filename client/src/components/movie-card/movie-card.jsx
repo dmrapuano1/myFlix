@@ -5,7 +5,7 @@ import {Button, Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 //Links to proper scss
-require('./movie-card.scss');
+// require('./movie-card.scss');
 
 //Exports MovieCard to MainView
 export class MovieCard extends React.Component {
