@@ -53,7 +53,7 @@ app.use(express.static('welcome'));
 app.use(express.static(path.join(__dirname + '/client/')));
 //Returns client side when URL includes '/client'
 app.get('/client/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/dist/index.html'));
+    res.sendFile(path.join(__dirname + '/client/dist/index.html'));
   });
 
 //Returns a list of all movies to the user
