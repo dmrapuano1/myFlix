@@ -13,6 +13,7 @@ export function RegisterView(props) {
   //Defines variables similar to setState in other views
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
+  const [ConfirmPassword, setConfirmPassword] = useState('');
   const [Email, setEmail] = useState('');
   const [Birthday, setBirthday] = useState('');
 
@@ -21,7 +22,7 @@ export function RegisterView(props) {
     //Prevents default form patterns (most importantly page refresh)
     e.preventDefault();
     //Checks password and confirmPassword are the same
-    if (Password.value !== ConfirmPassword.value) {
+    if (Password !== ConfirmPassword) {
       alert ('Passwords do not match.')
       return false
     }
@@ -72,7 +73,7 @@ export function RegisterView(props) {
       
       <Form.Group controlId="ConfirmPassword">
         <Form.Label>Confirm Password:</Form.Label>
-        <Form.Control type="password" value={Password} placeholder="Reenter your password" required onChange={e => setPassword(e.target.value)}/>
+        <Form.Control type="password" value={ConfirmPassword} placeholder="Reenter your password" required onChange={e => setConfirmPassword(e.target.value)}/>
       </Form.Group>
 
       <Form.Group controlId="Email">
