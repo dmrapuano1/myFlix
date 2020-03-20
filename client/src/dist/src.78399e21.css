@@ -11,13 +11,19 @@
 .reg_button {
   width: 150px;
 }
+body {
+  color: black;
+}
+body {
+  color: black;
+}
+
 .movie {
   margin-top: 10%;
 }
 
 .movie-picture {
   margin-left: 52.5%;
-  display: inline-block;
 }
 
 .movie-group, .movie-picture, .movie-card {
@@ -30,6 +36,10 @@
 }
 .director-card {
   margin-top: 1%;
+}
+
+.h1 {
+  font-weight: bold;
 }
 .h1 {
   font-weight: bold;
@@ -51,7 +61,6 @@
   justify-content: center;
 }
 body {
-  color: black;
   display: flex;
   justify-content: center;
   background-color: #405d27;
