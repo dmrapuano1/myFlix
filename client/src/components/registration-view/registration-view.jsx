@@ -36,8 +36,10 @@ export function RegisterView(props) {
     //If successful, sends data to console
     .then(response => {
       console.log(response);
-      alert('User registered. Please log in.')
-      // props.onRegister(Username);
+      alert('User registered. Please log in.');
+      if (response.status === 201) {
+        props.onRegister(Username);
+      };
     })
     //Catch all for errors
     .catch(e => {
