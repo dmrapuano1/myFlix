@@ -258,47 +258,50 @@ export class MainView extends React.Component {
           </Navbar.Collapse>
         </Navbar>
         {/* Route to MainView */}
-        <Router basename="/client">
+        <Router>
           <div className="main-view">
-            <Route exact path="/" render={() => 
+            {/* <Switch> */}
+            <Route exact path="/client" render={() => 
               <MovieList movies={movies}/>}/>
               {/* Route to target movie */}
-            <Route path="/movies/:movieID" render={ ({match}) =>
+            <Route path="/client/movies/:movieID" render={ ({match}) =>
               <CardColumns>
                 {/* Finds targeted movie in movies array and sends info to MovieView */}
                 <MovieView movie={movies.find( m => m._id === match.params.movieID)} onClick={(movieID) => this.handleAdd(movieID)}/>
               </CardColumns>
             }/>
             {/* Route to show all directors */}
-            <Route path="/directors" render={() => 
+            <Route path="/client/directors" render={() => 
               // mx-auto centers Rows (CardColumns for bootstrap Row/Col)
               <Row className="mx-auto">
                 {/* Maps directors like movies above */}
                 {directors.map( d => <DirectorView key={d._id} director={d}/>)}
               </Row>}/>
             {/* Route to show specific director */}
-            <Route path="/director/:director" render={ ({match}) => 
+            <Route path="/client/director/:director" render={ ({match}) => 
               <DirectorCard director={movies.find( m => m.director.name === match.params.director)}/>
             }/>
             {/* Route to show all genres */}
-            <Route path="/genres" render={() => 
+            <Route path="/client/genres" render={() => 
               <Row className="mx-auto">
                 { movies.map( m => <GenreView key={m._id} movie={m}/>)}
               </Row>}/>
             {/* Route to show specific genre */}
-            <Route path="/genre/:genre" render={ ({match}) =>
+            <Route path="/client/genre/:genre" render={ ({match}) =>
               <GenreCard movie={movies.find( m => m.genre.name === match.params.genre)}/>
             }/>
             {/* Route to show users profile */}
-            <Route path="/profile" render={() => 
+            <Route path="/client/profile" render={() => 
               <ProfileView user={userData[0]} favorites={favMovies} onRegister={newUser => this.onRegister(newUser)}/>
             }/>
             {/* Route to show users favorite movies */}
-            <Route path="/user/movies" render={() => 
+            <Route path="/client/user/movies" render={() => 
               <Row className="mx-auto">
                 {favMovies.map (m => <FavoriteMovies key={m.key} onClick={(target) => this.handleDelete(target)} movie={m.key} movieList={movies}/>)}
               </Row>
             }/>
+            {/* <Route render={()=> <div className="fourZeroFour">404 Error: Page not found</div>}/>
+            </Switch> */}
           </div>
         </Router>
       </div>
