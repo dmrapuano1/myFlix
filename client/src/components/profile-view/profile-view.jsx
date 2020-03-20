@@ -69,7 +69,7 @@ export class ProfileView extends React.Component {
         //Quick logout function
         localStorage.clear();
         //Loads MainView which due to logout will load LoginView
-        window.open('/client', '_self');
+        window.open('/client/', '_self');
       })
       .catch(e => {
         alert('Something went wrong. Account not deleted');

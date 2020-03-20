@@ -29,7 +29,7 @@ export class DirectorCard extends React.Component {
             <Card.Text className="head-text">Biography:</Card.Text>
             <Card.Text>{director.director.bio}</Card.Text>
             {/* Returns to prior page */}
-            <Link to={`/directors`}>
+            <Link to={`/client/directors`}>
               <Button variant="secondary">Back</Button>
             </Link>
           </Card.Body>

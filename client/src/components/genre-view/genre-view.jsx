@@ -21,11 +21,11 @@ export class GenreView extends React.Component {
           <Card.Title className="head-text">{movie.genre.name}</Card.Title>
           <Card.Text className="sub-text">({movie.title})</Card.Text>
           {/* Links to origin movie */}
-          <Link to={`/movies/${movie._id}`}>
+          <Link to={`/client/movies/${movie._id}`}>
             <Button variant="secondary">See Movie</Button>
           </Link>
           {/* Pulls Genre details to view */}
-          <Link to={`/genre/${movie.genre.name}`}>
+          <Link to={`/client/genre/${movie.genre.name}`}>
             <Button variant="info">Details</Button>
           </Link>
         </Card.Body>

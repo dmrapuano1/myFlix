@@ -170,7 +170,7 @@ export class MainView extends React.Component {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     //Opens login view afterwords
-    window.open('/client', '_self');
+    window.open('/client/', '_self');
   }
 
   //sets values to user when logged in
@@ -245,15 +245,15 @@ export class MainView extends React.Component {
         {/* Navbar view */}
         <Navbar sticky="top" bg="light" expand="lg" className="mb-3 shadow-sm p-3 mb-5">
           {/* Gives a button to click no matter the size outside of sandwich menu */}
-          <Navbar.Brand href="http://localhost:1234/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
+          <Navbar.Brand href="https://rapuano-flix.herokuapp.com/client/profile" className="navbar-brand">{user}'s flix!</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           {/* Start of sandwich menu */}
           <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
             {/* Navigation for all major sections of app */}
-            <Button href="http://localhost:1234/" variant="light mr-1" size="lg" className="home-button">Home</Button>
-            <Button href="http://localhost:1234/directors" variant="light mr-1" size="lg" className="profile-button">Directors</Button>
-            <Button href="http://localhost:1234/genres" variant="light mr-1" size="lg" className="profile-button">Genres</Button>
-            <Button href="http://localhost:1234/profile" variant="light mr-1" size="lg" className="profile-button">Profile</Button>
+            <Button href="https://rapuano-flix.herokuapp.com/client/" variant="light mr-1" size="lg" className="home-button">Home</Button>
+            <Button href="https://rapuano-flix.herokuapp.com/client/directors" variant="light mr-1" size="lg" className="profile-button">Directors</Button>
+            <Button href="https://rapuano-flix.herokuapp.com/client/genres" variant="light mr-1" size="lg" className="profile-button">Genres</Button>
+            <Button href="https://rapuano-flix.herokuapp.com/client/profile" variant="light mr-1" size="lg" className="profile-button">Profile</Button>
           <Button variant="primary ml-1" size="lg" className="logout-button" onClick={() => this.onLogout()}>Log out</Button>
           </Navbar.Collapse>
         </Navbar>

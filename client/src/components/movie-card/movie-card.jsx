@@ -22,7 +22,7 @@ export class MovieCard extends React.Component {
           <Card.Title>{movie.title}</Card.Title>
           <Card.Text>{movie.description}</Card.Text>
           {/* Link to MainView to load more detailed movie information */}
-          <Link to={`/movies/${movie._id}`}>
+          <Link to={`/client/movies/${movie._id}`}>
             <Button variant="info">Details</Button>
           </Link>
         </Card.Body>

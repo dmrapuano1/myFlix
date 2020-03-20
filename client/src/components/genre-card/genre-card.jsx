@@ -25,7 +25,7 @@ export class GenreCard extends React.Component {
           <Card.Text className="sub-text">({movie.title})</Card.Text>
           <Card.Text>{movie.genre.description}</Card.Text>
           {/* Links back to previous view */}
-          <Link to={`/genres`}>
+          <Link to={`/client/genres`}>
             <Button variant="primary">Back</Button>
           </Link>
         </Card.Body>

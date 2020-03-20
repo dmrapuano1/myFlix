@@ -40,7 +40,7 @@ export class MovieView extends React.Component {
           <span className="value">{movie.director.name}</span>
         </div>
         {/* Sends user to MainView */}
-        <Link to={`/`}>
+        <Link to={`/client/`}>
           <Button variant="secondary">Home</Button>
         </Link>
         {/* Sets current movie as user favorite */}
