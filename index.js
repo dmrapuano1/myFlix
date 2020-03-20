@@ -337,11 +337,11 @@ app.use(express.static('public'));
 app.use(express.static('welcome'));
 
 //client-side routing
-// app.use(express.static(path.join(__dirname + '/client/')));
+app.use(express.static(path.join(__dirname + '/client/dist')));
 //Returns client side when URL includes '/client'
-// app.get('/client/*', (req, res) => {
-//     res.sendFile(path.join(__dirname + '/client/dist/index.html'));
-//   });
+app.get('/client/*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/dist/index.html'));
+  });
 
 //Having the app listen on a free port
 var port = process.env.PORT || 3000
