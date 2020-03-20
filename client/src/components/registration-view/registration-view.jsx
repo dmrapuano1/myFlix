@@ -37,15 +37,16 @@ export function RegisterView(props) {
     .then(response => {
       console.log(response);
       alert('User registered. Please log in.')
-      //Opens MainView to load LoginView
-      window.open('/client/', '_self');
     })
     //Catch all for errors
     .catch(e => {
       console.log('error registering the user')
       alert('User not registered. Please check the form and try again.')
+      return false
     });
     props.onRegister(Username);
+    //Opens MainView to load LoginView
+    window.open('/client/', '_self');
   };
 
   //Function to load LoginView if user hits back button
