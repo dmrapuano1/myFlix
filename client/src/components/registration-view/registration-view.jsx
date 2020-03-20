@@ -20,6 +20,11 @@ export function RegisterView(props) {
   const handleSubmit = (e) => {
     //Prevents default form patterns (most importantly page refresh)
     e.preventDefault();
+    //Checks password and confirmPassword are the same
+    if (Password.value !== ConfirmPassword.value) {
+      alert ('Passwords do not match.')
+      return false
+    }
     //Requests post of new user to database
     axios.post('https://rapuano-flix.herokuapp.com/accounts', {
       Username: Username,
@@ -63,6 +68,11 @@ export function RegisterView(props) {
       <Form.Group controlId="Password">
         <Form.Label>Password:</Form.Label>
         <Form.Control type="password" value={Password} placeholder="Enter desired password" required onChange={e => setPassword(e.target.value)}/>
+      </Form.Group>
+      
+      <Form.Group controlId="ConfirmPassword">
+        <Form.Label>Confirm Password:</Form.Label>
+        <Form.Control type="password" value={Password} placeholder="Reenter your password" required onChange={e => setPassword(e.target.value)}/>
       </Form.Group>
 
       <Form.Group controlId="Email">
