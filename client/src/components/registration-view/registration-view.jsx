@@ -37,7 +37,7 @@ export function RegisterView(props) {
     .then(response => {
       console.log(response);
       alert('User registered. Please log in.')
-      props.onRegister(Username);
+      // props.onRegister(Username);
     })
     //Catch all for errors
     .catch(e => {
