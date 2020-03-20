@@ -103,7 +103,7 @@ export class ProfileView extends React.Component {
                 <Card.Text className="head-text">Favorite Movies:</Card.Text>
                 {favorites}
                 {/* Links to display of all users movies */}
-                <Link to={`/user/movies`}>
+                <Link to={`/client/user/movies`}>
                   <Button variant="info">Edit Favorites</Button>
                 </Link>
               </Card.Body>
@@ -133,7 +133,7 @@ export class ProfileView extends React.Component {
               </Form.Group>
 
               {/* Return to MainView link */}
-              <Link to={`/`}>
+              <Link to={`/client/`}>
                   <Button variant="secondary">Home</Button>
               </Link>
               {/* Submit form button. Written so enter key will submit as well */}
