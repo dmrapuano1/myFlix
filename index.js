@@ -50,7 +50,7 @@ app.use(function (err, req, res, next) {
 app.use(express.static('welcome'));
 
 //client-side routing
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname + '/client/')));
 //Returns client side when URL includes '/client'
 app.get('/client/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/dist/index.html'));
