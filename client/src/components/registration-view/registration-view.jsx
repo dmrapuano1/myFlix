@@ -45,8 +45,6 @@ export function RegisterView(props) {
       return false
     });
     props.onRegister(Username);
-    //Opens MainView to load LoginView
-    window.open('/client/', '_self');
   };
 
   //Function to load LoginView if user hits back button
