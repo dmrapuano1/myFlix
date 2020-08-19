@@ -3,7 +3,15 @@ import { combineReducers } from 'redux';
 //Imports required actions
 import { SET_FILTER, SET_MOVIES, SET_DIRECTORS, SET_USER_DATA, SET_FAVORITES } from '../actions/actions';
 
-//Function called in main-view
+/**
+ * Function called in main-view
+ * @function visibilityFilter
+ * @param {string} state 
+ * @param {object} action 
+ * return based on switch 
+ * @returns {string} action.value
+ * @returns {string} state
+ */
 function visibilityFilter(state = '', action) {
   //Switch where if action is true, switch is true
   switch (action.type) {
@@ -16,6 +24,14 @@ function visibilityFilter(state = '', action) {
   }
 }
 
+/**
+ * @function movies
+ * @param {Array} state 
+ * @param {object} action 
+ * return based on switch 
+ * @returns {string} action.value
+ * @returns {Array} state
+ */
 function movies(state = [], action) {
   switch (action.type) {
     case SET_MOVIES:
@@ -25,6 +41,14 @@ function movies(state = [], action) {
   }
 }
 
+/**
+ * @function directors
+ * @param {Array} state 
+ * @param {object} action 
+ * return based on switch 
+ * @returns {string} action.value
+ * @returns {Array} state
+ */
 function directors(state = [], action) {
   switch (action.type) {
     case SET_DIRECTORS:
@@ -34,6 +58,14 @@ function directors(state = [], action) {
   }
 }
 
+/**
+ * @function userData
+ * @param {Array} state 
+ * @param {object} action 
+ * return based on switch 
+ * @returns {string} action.value
+ * @returns {Array} state
+ */
 function userData(state = [], action) {
   switch (action.type) {
     case SET_USER_DATA:
@@ -43,6 +75,14 @@ function userData(state = [], action) {
   }
 }
 
+/**
+ * @function favorites
+ * @param {Array} state 
+ * @param {object} action 
+ * return based on switch 
+ * @returns {string} action.value
+ * @returns {Array} state
+ */
 function favorites(state = [], action) {
   switch (action.type) {
     case SET_FAVORITES:

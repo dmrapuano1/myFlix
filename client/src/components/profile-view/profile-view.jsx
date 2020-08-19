@@ -8,7 +8,16 @@ import {Link} from 'react-router-dom';
 //Exports ProfileView to MainView
 export class ProfileView extends React.Component {
   
-  //Function to run on submit of form
+  /**
+   * Function to run on submit of form
+   * @async
+   * @function handleSubmit
+   * @param {*} e event
+   * @param {object} user
+   * returns false if log in fails
+   * @returns {boolean} false
+   * @returns {Promise} axios request
+  */
   handleSubmit(e, user) {
     //Prevents page from reloading (and other form defaults after submit)
     e.preventDefault();
@@ -47,7 +56,14 @@ export class ProfileView extends React.Component {
     });
   };
 
-  //Handles delete function in form
+  /** 
+   * Handles delete function in form
+   * @async
+   * @function handleDelete
+   * @param {e} e event
+   * @param {object} user
+   * @returns {Promise} axios request
+  */
   handleDelete(e, user) {
     //Safety to ensure user wants to delete account (protects accidental deletes)
     let value = prompt('Are you sure? This can not be undone. Type \'yes\' to finalize delete');

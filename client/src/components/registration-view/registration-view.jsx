@@ -17,7 +17,14 @@ export function RegisterView(props) {
   const [Email, setEmail] = useState('');
   const [Birthday, setBirthday] = useState('');
 
-  //Runs after form submits 
+  /**
+   * Runs after form submits 
+   * @function handleSubmit
+   * @param e event
+   * returns false if sign in fails
+   * @returns {boolean} false
+   * @returns {action} axios request
+  */
   const handleSubmit = (e) => {
     //Prevents default form patterns (most importantly page refresh)
     e.preventDefault();
@@ -49,7 +56,12 @@ export function RegisterView(props) {
     });
   };
 
-  //Function to load LoginView if user hits back button
+  /**
+   * Function to load LoginView if user hits back button
+   * @function handleBack
+   * @param e event
+   * @returns {function} onRegister(currentUser)
+  */
   const handleBack = (e) => {
     e.preventDefault();
     //Logic on MainView to show LoginView or RegisterView

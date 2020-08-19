@@ -41,7 +41,13 @@ export class MainView extends React.Component {
     };
   };
 
-  //Gets all movies from database
+  /** 
+   * Gets all movies from database
+   * @async
+   * @function getMovies
+   * @param {string} token
+   * @returns {props} movies
+  */
   getMovies(token) {
     axios.get("https://rapuano-flix.herokuapp.com/movies", {
       //Sends token to authorize
@@ -57,7 +63,13 @@ export class MainView extends React.Component {
     });
   }
 
-  //Gets all directors from database
+  /** 
+   * Gets all directors from database
+   * @async
+   * @function getDirectors
+   * @param {string} token
+   * @returns {props} directors
+  */
   getDirectors(token) {
     axios.get("https://rapuano-flix.herokuapp.com/directors", {
       headers: {Authorization: `Bearer ${token}`}
@@ -70,7 +82,13 @@ export class MainView extends React.Component {
     });
   }
 
-  //Gets active (logged in) user and their data
+  /** 
+   * Gets active (logged in) user and their data
+   * @async
+   * @function getUser
+   * @param {string} token
+   * @returns {props} userData
+  */
   getUser(token) {
     let user = localStorage.getItem('user');
     axios.get(`https://rapuano-flix.herokuapp.com/users/${user}`, {
@@ -84,7 +102,13 @@ export class MainView extends React.Component {
     });
   }
 
-  //Pulls the favorite movies of logged in user
+  /** 
+   * Pulls the favorite movies of logged in user
+   * @async
+   * @function getFavorites
+   * @param {string} token
+   * @returns {props} favorites
+  */
   getFavorites(token) {
     let user = localStorage.getItem('user');
     axios.get(`https://rapuano-flix.herokuapp.com/users/${user}/movies`, {
@@ -98,7 +122,13 @@ export class MainView extends React.Component {
     });
   }
 
-  //Adds selected movie to user's favorites
+  /** 
+   * Adds selected movie to user's favorites
+   * @async
+   * @function handleAdd
+   * @param {string} movieID
+   * @returns {state} favorites
+  */
   handleAdd(movieID) {
     //Defines user and token from localStorage so they don't have to be in function call
     let user = localStorage.getItem('user');
@@ -123,7 +153,13 @@ export class MainView extends React.Component {
     });
   }
 
-  //requests delete of movie from favorites
+  /** 
+   * requests delete of movie from favorites
+   * @async
+   * @function handleDelete
+   * @param {string} movieID
+   * @returns {state} favorites 
+  */
   handleDelete(movieID) {
     let user = localStorage.getItem('user')
     let token = localStorage.getItem('token')
@@ -164,7 +200,12 @@ export class MainView extends React.Component {
     }
   }
 
-  //Logs user out
+  /** 
+   * Logs user out
+   * @function onLogout
+   * @param {*}
+   * @returns {window} /client/
+  */
   onLogout() {
     //Removes all local storage items
     localStorage.removeItem('token');
@@ -173,7 +214,12 @@ export class MainView extends React.Component {
     window.open('/client/', '_self');
   }
 
-  //sets values to user when logged in
+  /** 
+   * sets values to user when logged in
+   * @function onLoggedIn
+   * @param {object} authData
+   * @returns {state} user
+  */
   onLoggedIn(authData) {
     this.setState({
       user: authData.user.Username
@@ -187,14 +233,25 @@ export class MainView extends React.Component {
     this.getUser(authData.token);
   }
 
-  //Changes view from register to login after user registers successfully
+  /**
+   * Changes view from register to login after user registers successfully
+   * @function onRegister
+   * @param {boolean} newUser @default true
+   * @returns {state} user
+  */
   onRegister(newUser) {
     this.setState({
       newUser
     });
   }
 
-  //Pulls movieID from user favorites and finds/assigns movie data from database
+  /** 
+   * Pulls movieID from user favorites and finds/assigns movie data from database
+   * @function movieIDtoName
+   * @param {Array} userData
+   * @param {Array} movies
+   * @returns {tag} <Card>...</Card>
+  */
   movieIDtoName(userData, movies) {
     if (userData[0]){
     let favMovies = [];

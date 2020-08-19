@@ -12,7 +12,15 @@ export function LoginView(props) {
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
 
-  //Function to run on submit
+  /**
+   * Function to run on submit
+   * @async
+   * @function handleSubmit
+   * @param {*} e event
+   * @param {string} Username
+   * @param {string} Password
+   * @returns {Promise} axios request
+  */
   const handleSubmit = (e) => {
     //Prevents page from refreshing (along with other default behaviors of forms)
     e.preventDefault();
@@ -32,6 +40,11 @@ export function LoginView(props) {
     });
   };
 
+  /**
+   * @function handleRegister
+   * @param {*} e 
+   * @returns {Function} onRegister(Username)
+   */
   const handleRegister = (e) => {
     var Username = null;
     props.onRegister(Username);

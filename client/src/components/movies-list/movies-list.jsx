@@ -5,11 +5,23 @@ import {Navbar, CardColumns, Button} from 'react-bootstrap'
 import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 import { MovieCard } from '../movie-card/movie-card';
 
+/**
+ * @function mapStateToProps
+ * @param {*} state 
+ * @returns {state} visibilityFilter
+ */
 const mapStateToProps = state => {
   const { visibilityFilter } = state;
   return { visibilityFilter };
 };
 
+/**
+ * @function MoviesList
+ * @param {*} props 
+ * returns different view if no movies are present
+ * @returns {tag} <div className="main-view"/>
+ * @returns {tag} <div className="movies-list">...</div>
+ */
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
   let filteredMovies = movies;
