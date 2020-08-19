@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: visibility-filter-input.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,42 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: visibility-filter-input.jsx</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import Form from 'react-bootstrap/Form';
 
-    <h3> </h3>
+import { setFilter } from '../../actions/actions';
 
+/**
+ * @function VisibilityFilterInput
+ * @param {*} props
+ * @returns {tag} &lt;Form.Control/>
+ */
+function VisibilityFilterInput(props) {
+  return &lt;Form.Control
+    onChange={e => props.setFilter(e.target.value)}
+    value={props.visibilityFilter}
+    placeholder="filter"
+  />;
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default connect(
+  null,
+  { setFilter }
+)(VisibilityFilterInput);</code></pre>
+        </article>
+    </section>
 
 
 
