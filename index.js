@@ -13,7 +13,7 @@ cors = require('cors');
 const app = express();
 
 //Has express use CORS
-// app.use(cors());
+app.use(cors());
 
 //Allows express to use bodyParser
 app.use(bodyParser.json());
